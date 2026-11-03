@@ -1,0 +1,3092 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sổ tay tương tác Tâm loại học Nalanda — kiến thức, sơ đồ, từ điển, flashcards, biện kinh và bài tự kiểm tra.">
+<meta name="theme-color" content="#f7f8f3">
+<title>Tâm loại học · Sổ tay tương tác</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f7f8f3;--bg2:#eef4ef;--paper:#ffffff;--ink:#22363a;--muted:#5d6f72;--faint:#8a9a9b;--line:#e2e9e3;--line2:#cfdcd3;
+ --brand:#2f7f6d;--brand-ink:#1d5a4c;--soft:#e6f3ee;
+ --mint:#3c9a7f;--mintsoft:#e3f4ec;--peach:#e0855a;--peachsoft:#fdeee4;--sky:#4d8fc6;--skysoft:#e6f0fa;
+ --lav:#8473c4;--lavsoft:#efecfa;--butter:#c3962f;--buttersoft:#fdf4dc;--rose:#cc647a;--rosesoft:#fbe9ed;
+ --danger:#b8574a;--redsoft:#fdeeea;--gold:#c3962f;--goldsoft:#fdf4dc;
+ --shadow-sm:0 1px 2px rgba(34,54,58,.05),0 2px 8px rgba(34,54,58,.04);
+ --shadow:0 2px 6px rgba(34,54,58,.05),0 12px 32px rgba(34,54,58,.08);
+ --r:16px;--topbar:64px;
+ --serif:'Lora',Georgia,'Times New Roman',serif;
+ --sans:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+ color-scheme:light;
+}
+[data-theme="dark"]{
+ --bg:#121b1d;--bg2:#17252a;--paper:#1b2a2d;--ink:#e6eeea;--muted:#a6b8b4;--faint:#7f9390;--line:#2c3f41;--line2:#3a5153;
+ --brand:#7cd0b6;--brand-ink:#a8e3d0;--soft:#1f3b36;
+ --mint:#78cfb2;--mintsoft:#1d3a33;--peach:#f2a984;--peachsoft:#3d2c24;--sky:#8cbcea;--skysoft:#1d2f40;
+ --lav:#b3a6ec;--lavsoft:#2b2840;--butter:#e7c46d;--buttersoft:#3a3220;--rose:#ee9aab;--rosesoft:#3c2630;
+ --danger:#f0a596;--redsoft:#3d2826;--gold:#e7c46d;--goldsoft:#3a3220;
+ --shadow-sm:0 1px 2px rgba(0,0,0,.2);--shadow:0 10px 30px rgba(0,0,0,.28);
+ color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 55%,transparent);outline-offset:2px;border-radius:8px}
+a{color:inherit;text-decoration:none}
+button:disabled{opacity:.45;cursor:default}
+::selection{background:#bfe6d6;color:#173b33}
+svg.i{width:18px;height:18px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+
+/* palette helpers */
+.c-mint{--c:var(--mint);--cs:var(--mintsoft)}.c-peach{--c:var(--peach);--cs:var(--peachsoft)}.c-sky{--c:var(--sky);--cs:var(--skysoft)}
+.c-lav{--c:var(--lav);--cs:var(--lavsoft)}.c-butter{--c:var(--butter);--cs:var(--buttersoft)}.c-rose{--c:var(--rose);--cs:var(--rosesoft)}
+
+/* ---------- layout ---------- */
+.app{min-height:100vh;display:grid;grid-template-columns:272px minmax(0,1fr)}
+.sidebar{height:100vh;height:100dvh;position:sticky;top:0;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:20px 14px 28px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent;z-index:85}
+.s-brand{display:flex;gap:12px;align-items:center;padding:4px 8px 18px;border-bottom:1px solid var(--line)}
+.symbol{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--mintsoft),var(--skysoft));display:grid;place-items:center;flex-shrink:0}
+.symbol svg{width:30px;height:30px}
+.s-brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--faint);font-weight:600}
+.s-brand strong{font:600 20px/1.2 var(--serif);display:block;margin-top:2px}
+.iconbtn.s-close{display:none;margin-left:auto}
+.s-head{padding:18px 10px 6px;font-size:10.5px;text-transform:uppercase;color:var(--faint);letter-spacing:.14em;font-weight:700}
+.s-link{display:flex;align-items:center;gap:11px;width:100%;background:transparent;border:0;color:var(--ink);padding:9px 11px;border-radius:11px;text-align:left;font-size:14px;font-weight:500;transition:background .15s}
+.s-link:hover{background:var(--bg2)}
+.s-link.active{background:var(--soft);color:var(--brand-ink);font-weight:600}
+.s-link .navico{color:var(--brand);display:grid}
+.s-link .number{margin-left:auto;font-size:11px;color:var(--faint);background:var(--bg2);border-radius:20px;padding:1px 8px;font-weight:600}
+.s-link.active .number{background:var(--paper)}
+.s-topnav{padding-bottom:10px;border-bottom:1px solid var(--line)}
+.s-units{padding-top:4px}
+.unit-toggle{display:flex;gap:10px;align-items:center;padding:8px 9px;width:100%;background:none;color:var(--ink);border:0;text-align:left;border-radius:11px;font-size:13px;font-weight:600;line-height:1.35}
+.unit-toggle:hover,.unit-toggle.open{background:var(--bg2)}
+.u-badge{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--cs);color:var(--c);font-size:14px;font-weight:700;flex-shrink:0;font-family:var(--sans)}
+.unit-toggle .chev{margin-left:auto;color:var(--faint);transition:transform .2s}
+.unit-toggle.open .chev{transform:rotate(90deg)}
+.unit-sub{padding:2px 0 8px 22px;display:none;position:relative}
+.unit-sub::before{content:'';position:absolute;left:23px;top:4px;bottom:12px;width:2px;background:var(--line);border-radius:2px}
+.unit-sub.open{display:block}
+.unit-item{display:flex;align-items:flex-start;gap:9px;padding:7px 10px 7px 0;color:var(--muted);border-radius:9px;font-size:12.5px;line-height:1.45;border:0;background:none;width:100%;text-align:left;position:relative}
+.unit-item:hover{color:var(--ink)}
+.unit-item.selected{color:var(--brand-ink);font-weight:600}
+.mini-check{border:2px solid var(--line2);background:var(--paper);border-radius:50%;width:12px;height:12px;flex-shrink:0;margin-top:3px;position:relative;z-index:1;display:grid;place-items:center;font-size:7px;color:#fff}
+.unit-item.selected .mini-check{border-color:var(--brand)}
+.mini-check.done{background:var(--brand);border-color:var(--brand)}
+.s-foot{font-size:11px;line-height:1.6;color:var(--faint);padding:18px 10px 0;margin-top:12px;border-top:1px solid var(--line)}
+
+.main{min-width:0}
+.topbar{height:var(--topbar);padding:0 clamp(16px,3.4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:14px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.topbar .left{display:flex;align-items:center;gap:10px;min-width:0}
+.topbar .trail{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .trail b{color:var(--ink);font-weight:600}
+.m-brand{display:none;font:600 17px var(--serif);white-space:nowrap}
+.iconbtn.mobile-menu{display:none}
+.actions{display:flex;align-items:center;gap:8px;min-width:0}
+.searchbar{height:40px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:0 12px;width:clamp(200px,26vw,320px);color:var(--faint);transition:border-color .15s,box-shadow .15s}
+.searchbar:focus-within{border-color:var(--brand);box-shadow:0 0 0 4px var(--soft)}
+.searchbar input{border:0;background:transparent;outline:0;min-width:0;flex:1;color:var(--ink);font-size:13.5px;height:100%}
+.searchbar input::placeholder{color:var(--faint)}
+.kbd{border:1px solid var(--line);border-radius:6px;font-size:11px;padding:0 6px;color:var(--faint);line-height:18px}
+.iconbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;height:40px;width:40px;display:grid;place-items:center;flex-shrink:0}
+.iconbtn:hover{background:var(--bg2)}
+.content{max-width:1180px;margin:0 auto;padding:32px clamp(16px,3.4vw,48px) 96px}
+.content:focus{outline:0}
+
+/* ---------- typography & atoms ---------- */
+.eyebrow{font-size:11.5px;text-transform:uppercase;font-weight:700;letter-spacing:.14em;color:var(--brand)}
+.page-title{font:600 clamp(30px,3.6vw,46px)/1.18 var(--serif);letter-spacing:-.015em;margin:10px 0 12px}
+.lede{font-size:15.5px;color:var(--muted);line-height:1.75;max-width:760px;margin:0}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600;background:var(--soft);color:var(--brand-ink);white-space:nowrap}
+.pill.gold{background:var(--goldsoft);color:color-mix(in srgb,var(--gold) 75%,var(--ink))}
+.pill.done{background:var(--brand);color:#fff}
+.smallmeta{color:var(--muted);font-size:12.5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line2);background:var(--paper);color:var(--ink);border-radius:12px;padding:10px 16px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px;justify-content:center;min-height:44px;transition:transform .15s,background .15s,box-shadow .15s;text-align:center;line-height:1.3}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.btn.primary{background:var(--brand);color:#fff;border-color:transparent}
+[data-theme="dark"] .btn.primary{color:#0f2420}
+.btn.tiny{padding:6px 12px;min-height:36px;font-size:12.5px}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--brand-ink)}
+.btn.ghost:hover{background:var(--soft)}
+.btn.success{background:var(--soft);color:var(--brand-ink);border-color:transparent}
+.inline-link{color:var(--brand);font-size:13.5px;font-weight:600;border:0;background:none;padding:6px 0;display:inline-flex;align-items:center;gap:5px;text-align:left}
+.inline-link:hover{text-decoration:underline;text-underline-offset:3px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 20px;margin:44px 0 18px;flex-wrap:wrap}
+.section-head h2{font:600 clamp(22px,2.4vw,27px)/1.3 var(--serif);margin:0}
+.section-head p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r)}
+.source-note{display:flex;gap:12px;padding:16px 18px;background:var(--goldsoft);border-radius:14px;font-size:13.5px;line-height:1.7;color:var(--ink);margin-top:28px}
+.source-note>svg{color:var(--gold);margin-top:3px}
+.empty{border:1.5px dashed var(--line2);border-radius:var(--r);padding:40px 22px;text-align:center;color:var(--muted);font-size:14px;line-height:1.75;display:grid;justify-items:center;gap:10px}
+.empty svg{width:72px;height:72px}
+
+/* ---------- hero ---------- */
+.hero{border-radius:28px;overflow:hidden;position:relative;background:linear-gradient(135deg,#eaf6f0 0%,#eef3fb 55%,#fdf1e8 100%);padding:clamp(26px,4.5vw,52px);display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:28px;align-items:center;border:1px solid var(--line)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#183530,#1a2a3a 60%,#352a24)}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--paper);padding:6px 12px;border-radius:999px;box-shadow:var(--shadow-sm);font-size:10.5px}
+.hero h1{font:600 clamp(32px,4.6vw,54px)/1.12 var(--serif);letter-spacing:-.02em;margin:18px 0 14px}
+.hero h1 em{font-style:italic;color:var(--brand)}
+.hero p{max-width:560px;color:var(--muted);line-height:1.75;font-size:15px;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero-art{position:relative;display:grid;justify-items:center}
+.hero-art svg{width:100%;max-width:360px;height:auto;overflow:visible}
+.hero-art .cap{font-size:12px;color:var(--muted);margin-top:4px;text-align:center}
+.orbit-node{cursor:pointer;transition:transform .2s}
+.orbit-node:hover{transform:scale(1.12)}
+.orbit-node,.orbit-node *{transform-box:fill-box;transform-origin:center}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0 0}
+.stat{background:var(--paper);padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);display:flex;gap:14px;align-items:center;min-width:0}
+.stat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--cs);color:var(--c);flex-shrink:0}
+.stat .num{font:600 26px/1.1 var(--serif)}
+.stat .lab{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+
+/* learning path */
+.path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;position:relative;counter-reset:st}
+.path::before{content:'';position:absolute;top:30px;left:10%;right:10%;border-top:2px dashed var(--line2)}
+.step{position:relative;text-align:center;padding:0 6px}
+.step .dot{width:60px;height:60px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;background:var(--paper);border:2px solid var(--c);color:var(--c);box-shadow:0 0 0 6px var(--bg)}
+.step .dot svg{width:24px;height:24px}
+.step b{display:block;font-size:14px;line-height:1.35}
+.step span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.5}
+.step .n{position:absolute;top:-4px;left:calc(50% + 16px);width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+
+/* unit cards */
+.units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.unit-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;text-align:left}
+.unit-card::after{content:'';position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:var(--cs);opacity:.7;pointer-events:none}
+.unit-card:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 40%,var(--line))}
+.unit-card .top{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.unit-card .u-badge{width:40px;height:40px;border-radius:12px;font-size:19px}
+.unit-card .num{font-size:11.5px;font-weight:700;color:var(--c);letter-spacing:.08em}
+.unit-card h3{margin:0;font-size:15.5px;line-height:1.4;font-weight:600}
+.unit-card p{font-size:13px;color:var(--muted);line-height:1.55;margin:0;flex:1}
+.unit-card footer{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;color:var(--muted);font-weight:500}
+.mini-bar{height:6px;background:var(--bg2);border-radius:9px;overflow:hidden}
+.mini-bar i{display:block;height:100%;background:var(--c);border-radius:inherit}
+.progress-bg{height:8px;background:var(--bg2);border-radius:20px;overflow:hidden}
+.progress-fg{height:100%;background:linear-gradient(90deg,var(--mint),var(--sky));border-radius:inherit;transition:width .3s}
+.course-progress{padding:18px 20px;margin-top:22px;display:flex;align-items:center;gap:18px}
+.course-progress .grow{flex:1;min-width:0}
+.course-progress .between{display:flex;justify-content:space-between;font-size:13.5px;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.course-progress strong{color:var(--brand-ink)}
+
+/* ---------- article ---------- */
+.crumb{display:flex;gap:6px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.crumb button{border:0;background:none;color:var(--brand);padding:2px 0;font-weight:500}
+.crumb svg{width:14px;height:14px;color:var(--faint)}
+.article-header{padding-bottom:24px;border-bottom:1px solid var(--line)}
+.article-head-row{display:flex;gap:16px;align-items:flex-start;margin-top:20px}
+.article-head-row .u-badge{width:52px;height:52px;border-radius:16px;font-size:24px;margin-top:6px}
+.article-head-row .page-title{margin:6px 0 10px}
+.article-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.two-pane{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:36px;padding-top:24px;align-items:start}
+.article h2{font:600 24px/1.3 var(--serif);margin:34px 0 14px;display:flex;align-items:center;gap:10px}
+.article h2 .h-num{width:30px;height:30px;border-radius:10px;background:var(--soft);color:var(--brand);font:700 14px var(--sans);display:grid;place-items:center;flex-shrink:0}
+.article section:first-child h2{margin-top:6px}
+.definition{padding:26px 28px 22px;background:linear-gradient(120deg,var(--mintsoft),var(--skysoft));border-radius:20px;position:relative;overflow:hidden}
+.definition .qm{position:absolute;right:18px;top:6px;font:600 120px/1 var(--serif);color:var(--brand);opacity:.12;pointer-events:none}
+.definition .eyebrow{margin-bottom:10px;position:relative}
+.definition blockquote{margin:0;font:500 clamp(18px,2vw,22px)/1.65 var(--serif);position:relative}
+.definition .caption{font-size:12.5px;color:var(--muted);margin-top:14px;position:relative}
+/* points as timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline li{position:relative;padding:0 0 14px 52px}
+.timeline li::before{content:'';position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--line2)}
+.timeline li:last-child::before{display:none}
+.timeline .node{position:absolute;left:0;top:10px;width:36px;height:36px;border-radius:50%;background:var(--cs);color:var(--c);font-weight:700;font-size:13px;display:grid;place-items:center;border:2px solid var(--paper);box-shadow:0 0 0 1px var(--line)}
+.timeline .box{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.timeline h3{margin:0 0 4px;font-size:15px;font-weight:600;line-height:1.45}
+.timeline p{margin:0;font-size:14.5px;line-height:1.75;color:var(--muted)}
+.tip-card{background:var(--goldsoft);border-radius:16px;padding:18px 20px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px}
+.tip-card .ti{width:40px;height:40px;border-radius:12px;background:var(--paper);display:grid;place-items:center;color:var(--gold)}
+.tip-card .eyebrow{color:color-mix(in srgb,var(--gold) 80%,var(--ink))}
+.tip-card ul{padding-left:18px;margin:8px 0 0}
+.tip-card li{font-size:14.5px;line-height:1.7;margin:4px 0}
+.tip-card.ok{background:var(--mintsoft)}.tip-card.ok .ti{color:var(--mint)}.tip-card.ok .eyebrow{color:var(--brand-ink)}
+.tip-card.danger{background:var(--redsoft)}.tip-card.danger .ti{color:var(--danger)}.tip-card.danger .eyebrow{color:var(--danger)}
+.note-area textarea{width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--line2);border-radius:14px;padding:14px 16px;min-height:130px;resize:vertical;font-size:14.5px;line-height:1.7}
+.note-area textarea:focus{outline:0;border-color:var(--brand);box-shadow:0 0 0 4px var(--soft)}
+.notelab{display:flex;justify-content:space-between;align-items:center;gap:6px 14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+#noteStatus{display:inline-flex;align-items:center;gap:6px;color:var(--brand)}
+.article-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:30px;padding-top:22px}
+.article-bottom .grp{display:flex;gap:8px;flex-wrap:wrap}
+.sidepanel{position:sticky;top:calc(var(--topbar) + 20px);display:grid;gap:14px}
+.sidebox{padding:18px;border-radius:var(--r);background:var(--paper);border:1px solid var(--line)}
+.sidebox h3{margin:0 0 12px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.sidebox p{font-size:13.5px;color:var(--muted);line-height:1.7;margin:0 0 12px}
+.info-rows{display:grid;gap:8px;font-size:13px}
+.info-rows div{display:flex;justify-content:space-between;gap:10px}
+.info-rows span{color:var(--muted)}
+.info-rows b{font-weight:600;text-align:right}
+.mini-path{list-style:none;margin:0;padding:0;position:relative}
+.mini-path::before{content:'';position:absolute;left:7px;top:10px;bottom:10px;width:2px;background:var(--line)}
+.mini-path button{display:flex;gap:10px;align-items:flex-start;width:100%;border:0;background:none;padding:5px 0;text-align:left;font-size:13px;line-height:1.45;color:var(--muted);position:relative}
+.mini-path button:hover{color:var(--ink)}
+.mini-path .d{width:16px;height:16px;border-radius:50%;border:2px solid var(--line2);background:var(--paper);flex-shrink:0;margin-top:1px;display:grid;place-items:center;color:#fff}
+.mini-path .d svg{width:9px;height:9px;stroke-width:3.5}
+.mini-path .done .d{background:var(--brand);border-color:var(--brand)}
+.mini-path .cur{color:var(--ink);font-weight:600}
+.mini-path .cur .d{border-color:var(--brand);box-shadow:0 0 0 4px var(--soft)}
+
+/* list results */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.filter{border:1px solid var(--line2);color:var(--muted);background:var(--paper);padding:7px 14px;font-size:13px;font-weight:600;border-radius:999px;min-height:36px}
+.filter.selected{background:var(--brand);color:#fff;border-color:transparent}
+.search-result{border:1px solid var(--line);background:var(--paper);padding:16px 18px;border-radius:var(--r);margin:10px 0;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;transition:box-shadow .15s,border-color .15s;width:100%;text-align:left}
+.search-result:hover{border-color:var(--line2);box-shadow:var(--shadow)}
+.search-result h3{font-size:15.5px;margin:4px 0;font-weight:600;line-height:1.4}
+.search-result p{color:var(--muted);font-size:13.5px;line-height:1.6;margin:0}
+.search-result .go{color:var(--faint)}
+.search-result .u-badge{width:40px;height:40px;border-radius:12px;font-size:18px}
+mark{background:#fde7a8;border-radius:3px;padding:0 2px;color:#2b2b1d}
+
+/* ---------- map ---------- */
+.tree{display:grid;justify-items:center;margin-top:28px}
+.tree-root{border-radius:20px;padding:18px 34px;background:linear-gradient(135deg,var(--brand),color-mix(in srgb,var(--brand) 60%,var(--sky)));color:#fff;text-align:center;max-width:460px;width:100%;box-shadow:var(--shadow);position:relative}
+[data-theme="dark"] .tree-root{color:#0f2420}
+.tree-root strong{font:600 28px/1.2 var(--serif);display:block}
+.tree-root small{font-size:13px;opacity:.9}
+.tree-stem{height:28px;width:2px;background:var(--line2)}
+.tree-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;position:relative;padding-top:28px}
+.tree-three::before{content:'';position:absolute;top:0;left:16.66%;right:16.66%;height:2px;background:var(--line2)}
+.tree-branch{border:1px solid var(--line);background:var(--paper);padding:20px 18px;border-radius:var(--r);text-align:center;cursor:pointer;position:relative;transition:box-shadow .2s,transform .2s;display:grid;justify-items:center;gap:6px}
+.tree-branch::before{content:'';position:absolute;top:-28px;left:50%;width:2px;height:28px;background:var(--line2)}
+.tree-branch:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.tree-branch .bn{width:54px;height:54px;border-radius:50%;background:var(--cs);color:var(--c);display:grid;place-items:center;font:600 24px var(--serif)}
+.tree-branch b{font-size:15.5px;font-weight:600}
+.tree-branch small{color:var(--muted);font-size:13px;line-height:1.55}
+.seven{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;counter-reset:s}
+.seven-card{border:1px solid var(--line);background:var(--paper);padding:16px;border-radius:var(--r);cursor:pointer;display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:start;transition:box-shadow .2s;text-align:left}
+.seven-card:hover{box-shadow:var(--shadow)}
+.seven-card .sn{width:38px;height:38px;border-radius:12px;background:var(--cs);color:var(--c);display:grid;place-items:center;font-weight:700;font-size:15px}
+.seven-card b{font-size:14.5px;font-weight:600;line-height:1.4;display:block}
+.seven-card small{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);font-size:13px;line-height:1.55;margin-top:4px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.three-card{border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:18px;cursor:pointer;display:grid;gap:10px;align-content:start;transition:box-shadow .2s;text-align:left}
+.three-card:hover{box-shadow:var(--shadow)}
+.three-card .art{height:92px;border-radius:12px;background:var(--cs);display:grid;place-items:center;color:var(--c)}
+.three-card .art svg{height:70px;width:auto}
+.three-card h3{margin:0;font-size:15px;font-weight:600;line-height:1.4}
+.three-card p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.pair-card{border:1px solid var(--line);background:var(--paper);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:box-shadow .2s;text-align:left;display:grid;gap:12px}
+.pair-card:hover{box-shadow:var(--shadow)}
+.pair-card h3{margin:0;font-size:13px;font-weight:600;color:var(--muted);display:flex;gap:8px;align-items:center}
+.pair-card h3 i{font-style:normal;width:24px;height:24px;border-radius:8px;background:var(--cs);color:var(--c);display:grid;place-items:center;font-size:12px;font-weight:700}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr);align-items:center;gap:6px}
+.pair span{padding:10px 12px;border-radius:12px;font-size:13.5px;line-height:1.4;font-weight:600;text-align:center}
+.pair span:first-child{background:var(--mintsoft);color:color-mix(in srgb,var(--mint) 70%,var(--ink))}
+.pair span:last-child{background:var(--skysoft);color:color-mix(in srgb,var(--sky) 70%,var(--ink))}
+.pair svg{width:30px;height:20px;color:var(--faint)}
+
+/* ---------- glossary ---------- */
+.glossary{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.term-card{border:1px solid var(--line);background:var(--paper);padding:16px 18px;border-radius:var(--r);cursor:pointer;display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;transition:box-shadow .2s;text-align:left}
+.term-card:hover{box-shadow:var(--shadow)}
+.term-card .av{width:42px;height:42px;border-radius:12px;background:var(--cs);color:var(--c);display:grid;place-items:center;font:600 19px var(--serif)}
+.term-card h3{font:600 17px/1.35 var(--serif);margin:0 0 4px}
+.term-card p{font-size:13.5px;color:var(--muted);line-height:1.65;margin:0}
+.term-card footer{font-size:12.5px;color:var(--brand);font-weight:600;margin-top:8px;display:flex;align-items:center;gap:4px}
+.term-card footer svg{width:14px;height:14px}
+.select{padding:0 12px;height:44px;background:var(--paper);border:1px solid var(--line2);border-radius:12px;color:var(--ink);font-size:14px;min-width:0;max-width:100%}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.toolbar .select{flex:1 1 220px;max-width:380px}
+
+/* ---------- flashcards ---------- */
+.flash-frame{max-width:680px;margin:26px auto 0}
+.flashcard{perspective:1200px;cursor:pointer;outline:0}
+.flash-inner{display:grid;transition:transform .6s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d;min-height:300px}
+.flashcard.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:56px 28px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden}
+.flash-front{background:linear-gradient(135deg,var(--mintsoft),var(--skysoft) 60%,var(--lavsoft))}
+.flash-front::before,.flash-front::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
+.flash-front::before{width:220px;height:220px;right:-70px;top:-70px;background:color-mix(in srgb,var(--paper) 55%,transparent)}
+.flash-front::after{width:140px;height:140px;left:-40px;bottom:-50px;border:2px dashed color-mix(in srgb,var(--brand) 30%,transparent)}
+.flash-back{background:var(--paper);transform:rotateY(180deg)}
+.flash-face .top{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:var(--brand);position:absolute;top:20px;left:0;right:0}
+.flash-face .big{font:600 clamp(26px,4.4vw,40px)/1.25 var(--serif);margin:0;position:relative}
+.flash-back .big{font-size:22px;color:var(--brand-ink)}
+.flash-face .sub{font-size:16px;line-height:1.75;max-width:540px;margin:0}
+.flash-face .bottom{position:absolute;bottom:16px;left:0;right:0;font-size:12.5px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
+.flash-controls{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-top:18px}
+.flash-controls .btn:first-child{justify-self:start}.flash-controls .btn:last-child{justify-self:end}
+.flash-progress{text-align:center;font-size:13px;color:var(--muted);margin-top:14px}
+.dots{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line2)}
+.dots i.k{background:var(--mint)}.dots i.cur{background:var(--brand);transform:scale(1.4)}
+
+/* ---------- quiz ---------- */
+.quiz-panel{max-width:780px}
+.quiz-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:24px 0 10px;font-size:13.5px;color:var(--muted)}
+.quiz-top b{color:var(--brand-ink)}
+.seg{display:flex;gap:4px}
+.seg i{flex:1;height:6px;border-radius:6px;background:var(--line)}
+.seg i.ok{background:var(--mint)}.seg i.bad{background:var(--rose)}.seg i.cur{background:var(--sky)}
+.quiz-question{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px;margin-top:18px}
+.quiz-question h2{font:600 clamp(19px,2.2vw,24px)/1.5 var(--serif);margin:10px 0 20px}
+.answers{display:grid;gap:10px}
+.answer{background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;display:flex;gap:12px;align-items:flex-start;text-align:left;color:var(--ink);font-size:14.5px;line-height:1.55;width:100%;transition:border-color .15s,background .15s}
+.answer:hover:not(:disabled){border-color:var(--brand);background:var(--soft)}
+.answer .letter{flex-shrink:0;width:28px;height:28px;border-radius:9px;background:var(--paper);border:1px solid var(--line2);display:grid;place-items:center;font-size:12px;font-weight:700}
+.answer.correct{border-color:var(--mint);background:var(--mintsoft)}
+.answer.correct .letter{background:var(--mint);color:#fff;border-color:transparent}
+.answer.wrong{border-color:var(--rose);background:var(--rosesoft)}
+.answer.wrong .letter{background:var(--rose);color:#fff;border-color:transparent}
+.answer:disabled{opacity:1;cursor:default}
+.explain{padding:14px 16px;border-radius:14px;background:var(--skysoft);font-size:14px;line-height:1.7;margin-top:16px}
+.explain.ok{background:var(--mintsoft)}.explain.bad{background:var(--rosesoft)}
+.quiz-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;flex-wrap:wrap}
+.final-score{padding:34px 24px;text-align:center;border-radius:24px;border:1px solid var(--line);background:var(--paper);margin-top:22px;display:grid;justify-items:center;gap:8px}
+.final-score svg{width:150px;height:150px}
+.final-score p{color:var(--muted);margin:4px 0 12px;max-width:440px}
+
+/* ---------- cases ---------- */
+.case-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:22px;margin-top:22px;align-items:start}
+.venn-card{padding:16px;display:grid;gap:12px}
+.venn-card svg{width:100%;height:auto;display:block}
+.legend{display:grid;gap:6px;font-size:13px}
+.legend div{display:flex;gap:8px;align-items:center}
+.legend i{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.case-rule{padding:16px 18px;background:var(--soft);border-radius:16px}
+.case-rule .ab{font:600 clamp(19px,2.2vw,23px)/1.4 var(--serif);display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+.case-rule .ab .a{color:color-mix(in srgb,var(--mint) 75%,var(--ink))}.case-rule .ab .b{color:color-mix(in srgb,var(--sky) 75%,var(--ink))}
+.case-rule .smallmeta{margin-top:8px}
+.case-rule code{font-family:var(--sans);font-weight:700;background:var(--paper);padding:2px 8px;border-radius:7px}
+.caseboard{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.casecell{border:1px solid var(--line);background:var(--paper);border-radius:14px;padding:14px 16px;border-left:4px solid var(--c)}
+.casecell .label{font-size:12.5px;font-weight:700;color:var(--c);display:flex;align-items:center;gap:8px}
+.casecell .label i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:11px}
+.casecell p{font-size:14px;line-height:1.65;color:var(--ink);margin:8px 0 0}
+.casecell.impossible{background:transparent;border-style:dashed;border-left-style:dashed}
+.casecell.impossible p{color:var(--faint)}
+.c-gray{--c:var(--faint);--cs:var(--bg2)}
+.case-explain{font-size:14.5px;line-height:1.75;padding:16px 18px;background:var(--goldsoft);border-radius:14px}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.how .card{padding:16px}
+.how .hi{width:36px;height:36px;border-radius:11px;background:var(--cs);color:var(--c);display:grid;place-items:center;font-weight:700;margin-bottom:10px}
+.how h3{margin:0 0 4px;font-size:14.5px}
+.how p{margin:0;font-size:13.5px;line-height:1.65;color:var(--muted)}
+
+/* ---------- notes ---------- */
+.notebook-list{display:grid;gap:12px}
+.notebook-item{padding:16px 18px;border-left:4px solid var(--c)}
+.notebook-item h3{font-size:15.5px;margin:4px 0 8px}
+.notebook-item p{font-size:14px;color:var(--muted);line-height:1.7;white-space:pre-wrap;margin:0 0 8px;overflow-wrap:anywhere}
+
+/* ---------- misc ---------- */
+.mobile-overlay{display:none}
+.toast{position:fixed;right:24px;bottom:24px;z-index:99;background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(12px);transition:.2s;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:none}
+.bottom-nav{display:none}
+.print-only{display:none}
+
+/* ---------- responsive ---------- */
+@media(max-width:1180px){.two-pane{grid-template-columns:minmax(0,1fr) 240px;gap:26px}.path{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:980px){
+ .app{grid-template-columns:minmax(0,1fr)}
+ .sidebar{position:fixed;left:0;top:0;width:min(320px,88vw);transform:translateX(-104%);transition:transform .25s ease;box-shadow:0 0 40px rgba(0,0,0,.18)}
+ .sidebar.open{transform:none}
+ .iconbtn.s-close{display:grid}
+ .iconbtn.mobile-menu{display:grid}
+ .mobile-overlay.open{display:block;position:fixed;inset:0;background:rgba(20,40,40,.35);z-index:80;backdrop-filter:blur(2px)}
+ .two-pane{grid-template-columns:minmax(0,1fr)}
+ .sidepanel{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .case-grid{grid-template-columns:minmax(0,1fr)}
+ .venn-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+}
+@media(max-width:760px){
+ :root{--topbar:auto}
+ body{font-size:15px}
+ .topbar{flex-wrap:wrap;padding:10px 16px;gap:10px;row-gap:10px}
+ .topbar .trail{display:none}
+ .m-brand{display:block}
+ .actions{display:contents}
+ .searchbar{order:3;width:100%;flex:1 1 100%;height:42px}
+ .searchbar .kbd{display:none}
+ .actions .iconbtn{order:2}
+ .hide-small{display:none!important}
+ .topbar .left{flex:1}
+ .content{padding:22px 16px calc(96px + env(safe-area-inset-bottom))}
+ .hero{grid-template-columns:minmax(0,1fr);padding:24px 20px 26px;border-radius:24px;gap:6px}
+ .hero-art{order:-1}
+ .hero-art svg{max-width:330px}
+ .hero h1{margin:14px 0 10px}
+ .hero-actions .btn{flex:1 1 auto}
+ .stat{padding:14px;gap:10px}
+ .stat .ic{width:36px;height:36px}
+ .stat .num{font-size:22px}
+ .path{grid-template-columns:minmax(0,1fr);gap:0}
+ .path::before{top:24px;bottom:24px;left:23px;right:auto;border-top:0;border-left:2px dashed var(--line2)}
+ .step{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;text-align:left;padding:8px 0;align-items:center}
+ .step .dot{width:48px;height:48px;margin:0;box-shadow:0 0 0 5px var(--bg)}
+ .step .dot svg{width:20px;height:20px}
+ .step .n{left:32px;top:2px;width:20px;height:20px}
+ .step span{margin-top:2px}
+ .units-grid{grid-template-columns:minmax(0,1fr)}
+ .course-progress{flex-direction:column;align-items:stretch}
+ .article-head-row .u-badge{display:none}
+ .definition{padding:20px 18px}
+ .timeline li{padding-left:46px}
+ .timeline .node{width:32px;height:32px;font-size:12px}
+ .timeline li::before{left:15px;top:34px}
+ .sidepanel{grid-template-columns:minmax(0,1fr)}
+ .article-bottom{display:grid;grid-template-columns:minmax(0,1fr)}
+ .article-bottom .grp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .article-bottom .grp .btn:only-child{grid-column:1/-1}
+ .tree-three{grid-template-columns:minmax(0,1fr);padding-top:0;gap:12px}
+ .tree-three::before{display:none}
+ .tree-branch::before{top:-12px;height:12px}
+ .tree-branch:first-child::before{display:none}
+ .tree-branch{grid-template-columns:54px minmax(0,1fr);text-align:left;justify-items:start;column-gap:14px;align-items:center}
+ .tree-branch .bn{grid-row:span 2}
+ .tree-branch small{grid-column:1/-1}
+ .three{grid-template-columns:minmax(0,1fr)}
+ .three-card{grid-template-columns:92px minmax(0,1fr);align-items:center}
+ .three-card .art{grid-row:span 2;height:80px}
+ .three-card .art svg{height:56px}
+ .pairs,.glossary,.seven{grid-template-columns:minmax(0,1fr)}
+ .search-result{grid-template-columns:auto minmax(0,1fr)}
+ .search-result .go{display:none}
+ .quiz-question{padding:18px}
+ .flash-face{padding:52px 20px}
+ .flash-controls{grid-template-columns:1fr 1fr}
+ .flash-controls .btn{justify-self:stretch!important}
+ .flash-controls .mid{grid-column:1/-1;order:-1}
+ .venn-card{grid-template-columns:minmax(0,1fr)}
+ .venn-card svg{max-width:320px;margin:0 auto}
+ .caseboard{grid-template-columns:minmax(0,1fr)}
+ .how{grid-template-columns:minmax(0,1fr)}
+ .toolbar .select{max-width:none;flex-basis:100%}
+ .toast{left:16px;right:16px;bottom:calc(80px + env(safe-area-inset-bottom));text-align:center}
+ .bottom-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+ .bottom-nav button{border:0;background:none;display:grid;justify-items:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--faint);padding:6px 2px;border-radius:12px;min-height:48px}
+ .bottom-nav button svg{width:22px;height:22px}
+ .bottom-nav button.active{color:var(--brand)}
+ .bottom-nav button.active svg{background:var(--soft);border-radius:10px;padding:2px;width:26px;height:26px;margin:-2px 0}
+}
+@media(max-width:400px){
+ .stats{gap:10px}
+ .stat{flex-direction:column;align-items:flex-start}
+ .page-title{font-size:28px}
+ .hero h1{font-size:30px}
+ .pair{grid-template-columns:minmax(0,1fr)}
+ .pair svg{transform:rotate(90deg);justify-self:center;height:16px}
+ .three-card{grid-template-columns:minmax(0,1fr)}
+ .three-card .art{grid-row:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+ .sidebar,.topbar,.mobile-overlay,.hero-actions,.article-bottom,.note-area,.btn,.toast,.bottom-nav,.sidepanel{display:none!important}
+ .app{display:block}.content{max-width:100%;padding:0}.two-pane{display:block}
+ .timeline li,.definition,.tip-card{break-inside:avoid}
+ body{background:#fff;color:#000}
+}
+</style>
+</head>
+<body>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<div class="app">
+<aside class="sidebar" id="sidebar" aria-label="Mục lục">
+ <div class="s-brand"><div class="symbol" id="brandMark"></div><div><small>NALANDA · STUDY</small><strong>Tâm loại học</strong></div><button class="iconbtn s-close" id="closeBtn" aria-label="Đóng mục lục"></button></div>
+ <div class="s-head">Không gian học tập</div>
+ <nav class="s-topnav" id="mainNav"></nav>
+ <div class="s-head">Chương trình &amp; bài học</div>
+ <nav class="s-units" id="unitsNav"></nav>
+ <div class="s-foot">Bản học tập độc lập · Theo SGK Tâm loại học 2026 (57 trang). Các diễn giải bổ sung chỉ để hỗ trợ học, không thay thế lời Thầy/Cô hay giáo trình.</div>
+</aside>
+<main class="main">
+ <header class="topbar">
+  <div class="left"><button class="iconbtn mobile-menu" id="menuBtn" aria-label="Mở mục lục"></button><span class="m-brand">Tâm loại học</span><span class="trail" id="breadcrumbTop">Nalanda / Sổ tay</span></div>
+  <div class="actions"><label class="searchbar" aria-label="Tìm trong toàn bộ sổ tay"><span id="searchIco"></span><input id="globalSearch" type="search" placeholder="Tìm khái niệm, sự tướng…" autocomplete="off"><span class="kbd">/</span></label><button class="iconbtn" id="themeBtn" aria-label="Đổi chế độ sáng tối" title="Chế độ sáng / tối"></button><button class="iconbtn hide-small" id="printBtn" title="In bài đang xem" aria-label="In"></button></div>
+ </header>
+ <div class="content" id="content" tabindex="-1"></div>
+</main>
+</div>
+<nav class="bottom-nav" id="bottomNav" aria-label="Điều hướng nhanh"></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<script id="courseData" type="application/json">{
+  "units": [
+    {
+      "id": "nen",
+      "name": "01 · Nền tảng",
+      "description": "Định nghĩa – đối cảnh – cách đọc môn học",
+      "icon": "◎"
+    },
+    {
+      "id": "hien",
+      "name": "02 · Bảy loại Giác tri: Hiện tiền",
+      "description": "Hiện tiền và bốn phân loại, tự hiện tiền",
+      "icon": "◉"
+    },
+    {
+      "id": "ty",
+      "name": "03 · Tỷ độ",
+      "description": "Chánh nhân, Tỷ lượng và ba loại Tỷ độ",
+      "icon": "∴"
+    },
+    {
+      "id": "tq",
+      "name": "04 · Tái quyết tri",
+      "description": "Chứng lại và các phân loại",
+      "icon": "↺"
+    },
+    {
+      "id": "ts",
+      "name": "05 · Tứ sát tri",
+      "description": "Khẳng định nhưng chưa thấu đạt",
+      "icon": "◇"
+    },
+    {
+      "id": "nghi",
+      "name": "06 · Nghi",
+      "description": "Ba kiểu hoài nghi nhị biên",
+      "icon": "?"
+    },
+    {
+      "id": "hnbd",
+      "name": "07 · Hiển nhi bất định",
+      "description": "Cảnh hiện rõ mà chưa khẳng định",
+      "icon": "◌"
+    },
+    {
+      "id": "dd",
+      "name": "08 · Điên đảo tri",
+      "description": "Sai loạn, mộng tri và nhân sai loạn",
+      "icon": "≋"
+    },
+    {
+      "id": "ba",
+      "name": "09 · Ba loại Giác tri",
+      "description": "Phân loại theo sở thủ cảnh",
+      "icon": "△"
+    },
+    {
+      "id": "doi",
+      "name": "10 · Sáu cặp phân loại hai",
+      "description": "Lượng, phân biệt, sai loạn, căn/ý, tâm/tâm sở",
+      "icon": "⇄"
+    },
+    {
+      "id": "bk",
+      "name": "11 · Biện kinh & bài tập",
+      "description": "Musum, mushi, sự tướng và lập luận",
+      "icon": "✧"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lo-trinh",
+      "title": "Đọc bản đồ môn học",
+      "unit": "nen",
+      "pages": "3–5, 40–41",
+      "desc": "Giáo trình Kiến lập Tâm loại học triển khai theo ba bước: tánh tướng của Giác tri → các phép phân loại → ý nghĩa từng loại. Một pháp có thể được xem dưới nhiều trục phân loại khác nhau.",
+      "definition": "Giác tri được phân làm 7 loại, 3 loại và 2 loại.",
+      "points": [
+        [
+          "Trục 7 loại",
+          "Hiện tiền · Tỷ độ · Tái quyết tri · Tứ sát tri · Hiển nhi bất định · Nghi · Điên đảo tri."
+        ],
+        [
+          "Trục 3 loại",
+          "Phân biệt lấy nghĩa tổng làm sở thủ cảnh; tri thức vô sai loạn vô phân biệt lấy tự tướng làm sở thủ cảnh; sai loạn tri vô phân biệt lấy hữu vô minh hiện làm sở thủ cảnh."
+        ],
+        [
+          "Trục 2 loại",
+          "Sáu cặp: Lượng/tri thức phi lượng; phân biệt/vô phân biệt; sai loạn/vô sai loạn; ý tri/căn tri; khiển nhập giác/thành nhập giác; tâm/tâm sở."
+        ],
+        [
+          "Cách học",
+          "Nắm tánh tướng → nhớ phân loại → phân tích sự tướng → xác định chiều nhất thiết → thử biện kinh."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Những cặp 2 loại không phải lúc nào cũng là hai tập rời theo cách hiểu thông thường; cần xét theo tánh tướng và phạm vi được sách nêu."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "giac-tri",
+      "title": "Giác tri, Liễu tri, Tri thức",
+      "unit": "nen",
+      "pages": "3",
+      "desc": "Ba thuật ngữ nền để đọc toàn bộ môn học. Chú ý phân biệt tánh tướng với sở tướng.",
+      "definition": "“Liễu tri là tánh tướng của Giác tri.” “Sáng suốt và liễu tri là tánh tướng của Tri thức.”",
+      "points": [
+        [
+          "Đồng nghĩa",
+          "Giác tri, liễu tri và tri thức đều đồng nghĩa theo giáo trình."
+        ],
+        [
+          "Liễu tri",
+          "Ý nghĩa của Liễu tri: “Khả năng chấp trì cảnh.”"
+        ],
+        [
+          "Tánh tướng – sở tướng",
+          "Tánh tướng là dấu hiệu định nghĩa; sở tướng là điều được định nghĩa. Không thay định nghĩa bằng một sự tướng cụ thể."
+        ],
+        [
+          "Kiểm tra",
+          "Với bất kỳ tên tâm thức nào, cần hỏi: pháp này có liễu tri/chấp trì cảnh hay không? Tánh tướng cụ thể là gì?"
+        ]
+      ],
+      "examples": [
+        "“Nhãn tri chấp trì cái bình” là một tâm thức, không phải bản thân cái bình."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": [
+        "liễu tri",
+        "tánh tướng"
+      ]
+    },
+    {
+      "id": "canh",
+      "title": "Cảnh, chấp trì và chứng cảnh",
+      "unit": "nen",
+      "pages": "3, 49–54",
+      "desc": "Hướng dẫn đọc tên các tâm thức và tránh đồng nhất việc có đối cảnh với việc chứng được đối cảnh.",
+      "definition": "",
+      "points": [
+        [
+          "Đọc đúng đối tượng",
+          "“Nhãn tri chấp trì cái bình” là tên tri thức; “cái bình” là pháp được tri thức ấy hướng đến."
+        ],
+        [
+          "Chấp trì ≠ chứng",
+          "Có tâm thức chấp trì một cảnh nhưng chưa chắc chứng cảnh ấy. Sách đối chiếu Phân biệt chấp trì cái bình với Phân biệt chứng cái bình."
+        ],
+        [
+          "Hiện cảnh / sở thủ cảnh / xúc nhập cảnh",
+          "Là các khía cạnh đối cảnh khác nhau; khi phân tích tánh tướng cần giữ nguyên từ được sách sử dụng."
+        ],
+        [
+          "Trực tiếp / gián tiếp",
+          "Không tùy tiện suy từ “hiện tiền chứng cảnh” sang “chứng cảnh bằng hiện tiền”; sách nêu sự khác biệt ở tr. 53–54."
+        ]
+      ],
+      "examples": [
+        "Tứ sát tri nghĩ đến cái bình có thể chấp trì cái bình nhưng không nhất thiết chứng cái bình."
+      ],
+      "watch": [
+        "Trong biện kinh, biện đề phải thuộc đúng loại pháp đang xét; không lấy một vật (như sừng thỏ) thay cho tâm thức khi đề yêu cầu một giác tri."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "bay-loai",
+      "title": "Bảy loại Giác tri — sơ đồ tổng",
+      "unit": "hien",
+      "pages": "5, 23–40",
+      "desc": "Đây là trục học chính của môn: cần phân biệt chức năng và tình trạng chứng cảnh của từng loại.",
+      "definition": "",
+      "points": [
+        [
+          "1. Hiện tiền",
+          "Liễu tri ly phân biệt và không sai loạn."
+        ],
+        [
+          "2. Tỷ độ",
+          "Đam trước tri dựa vào chánh nhân, không nhầm lẫn với sở lượng ẩn tế."
+        ],
+        [
+          "3. Tái quyết tri",
+          "Liễu tri phi lượng chứng lại điều lượng trước đã chứng."
+        ],
+        [
+          "4. Tứ sát tri",
+          "Nhất ý đam trước tự cảnh nhưng chưa thấu đạt quán sát nghĩa."
+        ],
+        [
+          "5. Hiển nhi bất định",
+          "Tự tướng của xúc nhập cảnh trình hiện rõ mà không dẫn tới khẳng định."
+        ],
+        [
+          "6. Nghi",
+          "Liễu tri hoài nghi nhị biên bằng tự lực."
+        ],
+        [
+          "7. Điên đảo tri",
+          "Liễu tri sai loạn đối với xúc nhập cảnh."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "“Bảy loại Giác tri” và “bảy cách phân loại” không nên trộn với sơ đồ 3 loại hoặc 6 cặp 2 loại."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "hien-tien",
+      "title": "Hiện tiền và Hiện lượng",
+      "unit": "hien",
+      "pages": "5, 9–10",
+      "desc": "Hai khái niệm gần nhau nhưng không đồng nghĩa: Hiện lượng thêm điều kiện mới mẻ, không nhầm lẫn.",
+      "definition": "Hiện tiền: “Liễu tri ly phân biệt và không sai loạn.” Hiện lượng: “Liễu tri ly phân biệt và không sai loạn, mới mẻ, không nhầm lẫn.”",
+      "points": [
+        [
+          "Quan hệ",
+          "Nếu là Hiện lượng thì nhất thiết là Hiện tiền; ngược lại không nhất thiết."
+        ],
+        [
+          "Sát-na",
+          "Khi xét một dòng tri thức, chú ý sát-na đầu và các sát-na sau; không tự cho tất cả sát-na đều là lượng."
+        ],
+        [
+          "Phạm vi tông phái",
+          "Định nghĩa này được sách trình bày trong bối cảnh Kinh bộ tông. Trung quán Ứng thành có cách thừa nhận về hiện tiền và phân biệt khác; không dùng lẫn hai hệ."
+        ]
+      ],
+      "examples": [
+        "Nhãn tri chấp trì cái bình ở sát-na thứ nhất (trường hợp có đủ điều kiện) có thể là Căn hiện lượng."
+      ],
+      "watch": [
+        "“Hiện tiền” không đơn giản đồng nghĩa với “đang diễn ra ngay bây giờ”.",
+        "Sách có luận biện tinh tế về hiện tiền, lượng, nhất thiết chủng trí — tránh khái quát hóa vượt phạm vi định nghĩa."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "hien-4",
+      "title": "Bốn loại Hiện tiền",
+      "unit": "hien",
+      "pages": "10–22",
+      "desc": "Bốn loại hiện tiền được phân loại theo căn cứ sinh khởi hoặc chức năng nhận biết.",
+      "definition": "Phân loại có 4: Căn hiện tiền, Ý hiện tiền, Tự chứng hiện tiền, Du già hiện tiền.",
+      "points": [
+        [
+          "Căn hiện tiền",
+          "Sinh từ hữu sắc căn làm tăng thượng duyên bất cộng."
+        ],
+        [
+          "Ý hiện tiền",
+          "Sinh từ ý căn làm tăng thượng duyên bất cộng."
+        ],
+        [
+          "Tự chứng hiện tiền",
+          "Năng thủ hành tướng, ly phân biệt, không sai loạn."
+        ],
+        [
+          "Du già hiện tiền",
+          "Trí của Thánh giả sinh từ chánh quán song vận tam ma địa."
+        ]
+      ],
+      "examples": [
+        "Hãy chọn tên của một tâm thức và hỏi: nó là căn tri, ý tri, tự chứng, hay trí du già?"
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": [
+        "bốn hiện tiền"
+      ]
+    },
+    {
+      "id": "can-hien",
+      "title": "Căn hiện tiền và năm đối cảnh",
+      "unit": "hien",
+      "pages": "11–12",
+      "desc": "Nắm đúng nhân duyên đặc thù của căn và đối cảnh riêng cho từng giác quan.",
+      "definition": "“Liễu tri ly phân biệt và không sai loạn, sanh từ tăng thượng duyên bất cộng của chính nó đó là hữu sắc căn” là tánh tướng của Căn hiện tiền.",
+      "points": [
+        [
+          "Chấp sắc căn hiện tiền",
+          "Tăng thượng duyên bất cộng là nhãn căn; sở duyên duyên là sắc."
+        ],
+        [
+          "Chấp thanh căn hiện tiền",
+          "Tăng thượng duyên bất cộng là nhĩ căn; sở duyên duyên là thanh."
+        ],
+        [
+          "Chấp hương căn hiện tiền",
+          "Tăng thượng duyên bất cộng là tỷ căn; sở duyên duyên là hương."
+        ],
+        [
+          "Chấp vị căn hiện tiền",
+          "Tăng thượng duyên bất cộng là thiệt căn; sở duyên duyên là vị."
+        ],
+        [
+          "Chấp xúc căn hiện tiền",
+          "Tăng thượng duyên bất cộng là thân căn; sở duyên duyên là xúc."
+        ],
+        [
+          "Musum với Căn tri",
+          "Nếu là Căn hiện tiền thì nhất thiết là Căn tri; nếu là Căn tri thì không nhất thiết là Căn hiện tiền."
+        ]
+      ],
+      "examples": [
+        "Nhãn tri mà một mặt trăng trình hiện như hai mặt trăng là Căn tri điên đảo, không là Căn hiện tiền."
+      ],
+      "watch": [
+        "Nhãn tri không phải Ý tri. Để chứng minh “không là Căn hiện tiền”, hãy dựa vào điều kiện tánh tướng, không chỉ gọi tên đối cảnh."
+      ],
+      "level": "Căn bản",
+      "tags": [
+        "nhãn tri",
+        "nhĩ tri",
+        "musum"
+      ]
+    },
+    {
+      "id": "y-hien",
+      "title": "Ý hiện tiền — hai loại",
+      "unit": "hien",
+      "pages": "12–16",
+      "desc": "Ý hiện tiền khác Ý tri: mọi Ý hiện tiền là Ý tri nhưng không phải mọi Ý tri đều là Ý hiện tiền.",
+      "definition": "“Liễu tri ly phân biệt và không sai loạn, sanh từ tăng thượng duyên bất cộng của chính nó đó là ý căn” là tánh tướng của Ý hiện tiền.",
+      "points": [
+        [
+          "Hai loại",
+          "Ý hiện tiền được chỉ ra ngay thời điểm này; Ý hiện tiền mà đó không là cái đó."
+        ],
+        [
+          "Ngay thời điểm này",
+          "Tha chứng, ly phân biệt và không sai loạn, được chỉ ra ngay thời điểm này, sinh từ ý căn."
+        ],
+        [
+          "Năm đối cảnh",
+          "Chấp sắc, thanh, hương, vị, xúc ý hiện tiền."
+        ],
+        [
+          "Ví dụ loại không là cái đó",
+          "Tha tâm thông (theo sách)."
+        ],
+        [
+          "Cách sinh khởi",
+          "Ba chủ trương được trình bày: giao thế sinh khởi, tam hành sinh khởi, duy tục biên sinh khởi."
+        ],
+        [
+          "Dẫn chứng Trần Na",
+          "“Tri Sắc, có hai tướng. Dựa vào nhãn và ý.” — liên hệ phân biệt Căn hiện tiền và Ý hiện tiền."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Ý hiện tiền và Ý tri là quan hệ musum, không xem là đồng nghĩa.",
+        "Các tranh luận về thời biên tế sát-na rất chuyên sâu; nên học sau tánh tướng cơ bản."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tu-chung",
+      "title": "Tự chứng hiện tiền",
+      "unit": "hien",
+      "pages": "16–19",
+      "desc": "Nhận biết một tâm thức đang trải nghiệm tâm thức khác (nội cảnh), khác với căn tri hướng đến ngoại cảnh.",
+      "definition": "“Năng thủ hành tướng, ly phân biệt, không sai loạn” là tánh tướng của Tự chứng hiện tiền.",
+      "points": [
+        [
+          "Tự chứng",
+          "“Năng thủ hành tướng” là tánh tướng của Tự chứng."
+        ],
+        [
+          "Ba loại",
+          "Lượng mà đã trở thành Tự chứng hiện tiền; Tái quyết tri mà đã trở thành Tự chứng hiện tiền; Hiển nhi bất định mà đã trở thành Tự chứng hiện tiền."
+        ],
+        [
+          "Điểm then chốt",
+          "Theo trích dẫn của Ngài Panchen: nếu là lượng thì cần được thành lập bởi Tự chứng hiện tiền trải nghiệm chính nó; tri thức đơn thuần không đòi hỏi như vậy."
+        ],
+        [
+          "Cùng thời",
+          "Nhãn tri chấp trì căn nhà và Tự chứng hiện tiền trải nghiệm nhãn tri đó là đồng thời (theo ví dụ SGK tr. 19)."
+        ],
+        [
+          "Cách gọi",
+          "Dùng “trải nghiệm”, không thay bằng “kinh nghiệm” khi gọi tên biện đề trong bài giảng."
+        ]
+      ],
+      "examples": [
+        "Tự chứng hiện tiền trải nghiệm nhãn tri chấp trì căn nhà."
+      ],
+      "watch": [
+        "Đừng gọi Tự chứng hiện tiền là mắt nhìn tâm thức; đối cảnh ở đây là tâm thức."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "du-gia",
+      "title": "Du già hiện tiền",
+      "unit": "hien",
+      "pages": "20–22",
+      "desc": "Một loại hiện tiền gắn với trí của Thánh giả, không được đồng nhất với việc suy nghĩ hay tưởng tượng trong thiền.",
+      "definition": "“Trí thuộc dòng tương tục của Thánh giả, ly phân biệt, không sai loạn, sinh từ tăng thượng duyên bất cộng của chính nó đó là chánh quán song vận tam ma địa” là tánh tướng của Du già hiện tiền.",
+      "points": [
+        [
+          "Ba loại",
+          "Thinh văn du già hiện tiền; Duyên giác du già hiện tiền; Đại thừa du già hiện tiền."
+        ],
+        [
+          "Hiển nhi bất định",
+          "Sách nêu không có Hiển nhi bất định du già hiện tiền vì Du già hiện tiền nhất thiết chứng tự cảnh."
+        ],
+        [
+          "Bối cảnh",
+          "Các luận cứ chuyên sâu liên hệ Thích Lượng Luận và Nhất thiết chủng trí nên giữ đúng chủ thể Thánh giả, tránh chuyển thành ví dụ phàm phu."
+        ]
+      ],
+      "examples": [
+        "Bản trí hiện tiền chứng vô ngã của cá thể (sự tướng của Du già hiện lượng, tr. 44)."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tu-hien",
+      "title": "Tự hiện tiền (khác Tự chứng hiện tiền)",
+      "unit": "hien",
+      "pages": "22–23",
+      "desc": "Thuật ngữ Tự hiện tiền dễ bị đọc nhầm với Tự chứng hiện tiền; đây là mục luận riêng trong sách.",
+      "definition": "Có 7 loại Tự hiện tiền: 6 Tự hiện tiền phân biệt và 1 Tự hiện tiền vô phân biệt.",
+      "points": [
+        [
+          "Sáu phân biệt",
+          "Phân biệt sai loạn; phân biệt thế tục; phân biệt tỷ độ; phân biệt sanh từ tỷ độ; phân biệt niệm; phân biệt hiện cầu."
+        ],
+        [
+          "Ví dụ",
+          "Sai loạn: chấp âm thanh thường hằng. Thế tục: nghĩ “đó là cái bình”. Niệm: nhớ tháng trước. Hiện cầu: nghĩ về tương lai."
+        ],
+        [
+          "Gộp thành 4",
+          "Phân biệt dựa ký hiệu; phóng đại tha nghĩa; sở hữu ẩn tế nghĩa; và vô phân biệt Tự hiện tiền."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "“Tự hiện tiền” không được đổi tên thành “Tự chứng hiện tiền”."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "ty-do",
+      "title": "Tỷ độ và Tỷ lượng",
+      "unit": "ty",
+      "pages": "23–25",
+      "desc": "Hai khái niệm thường đi kèm; Tỷ lượng là nhận thức mới mẻ, không nhầm lẫn được thiết lập từ chánh nhân.",
+      "definition": "Tỷ độ: “Đam trước tri dựa vào sở y (điểm tựa) của chính nó đó là chánh nhân để không nhầm lẫn sở lượng ẩn tế của chính nó.”",
+      "points": [
+        [
+          "Tỷ lượng",
+          "“Liễu tri dựa vào sở y của chính nó đó là chánh nhân để không nhầm lẫn, mới mẻ đối với sở lượng ẩn tế của chính nó.”"
+        ],
+        [
+          "Không đồng nghĩa",
+          "Nếu là Tỷ độ thì không nhất thiết là Lượng. Tỷ độ chứng lại ở sát-na thứ hai không còn mới mẻ."
+        ],
+        [
+          "Điểm tựa",
+          "Chánh nhân là cơ sở chứng minh; không phải cứ nghĩ ra một lý do là thành tỷ lượng."
+        ],
+        [
+          "Phân biệt",
+          "Tỷ độ là loại đam trước tri / phân biệt, không là Căn tri."
+        ]
+      ],
+      "examples": [
+        "Tỷ lượng chứng âm thanh vô thường."
+      ],
+      "watch": [
+        "Không nói Tâm phân biệt bất kỳ nào cũng là tỷ lượng."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "ty-ba",
+      "title": "Ba loại Tỷ độ",
+      "unit": "ty",
+      "pages": "23–25",
+      "desc": "Ba loại Tỷ độ phân biệt theo loại chánh nhân và tính chất sở lượng.",
+      "definition": "Tín hứa tỷ độ · Cực thành tỷ độ · Sự thế tỷ độ.",
+      "points": [
+        [
+          "Tín hứa tỷ độ",
+          "Dựa vào tín hứa chánh nhân, không nhầm lẫn với sở lượng cực ẩn tế; ví dụ tỷ độ chứng ý nghĩa kinh văn “Thí đắc tài, giới sinh lạc” không nhầm lẫn."
+        ],
+        [
+          "Cực thành tỷ độ",
+          "Dựa vào cực thành chánh nhân, đối với sở lượng thanh khởi cộng xứng; sự tướng: “Tỷ độ tri nhận cái có con thỏ phù hợp gọi là ‘mặt trăng’.”"
+        ],
+        [
+          "Sự thế tỷ độ",
+          "Dựa vào sự thế chánh nhân, không nhầm lẫn với sở lượng lược ẩn tế; sự tướng: tỷ độ chứng âm thanh vô thường."
+        ],
+        [
+          "Tín hứa và ba khảo sát",
+          "Giáo ngôn không bị tổn hại bởi hiện lượng, bởi sự thế tỷ độ, và tự ngữ cú trực/gián tiếp cũng như trước/sau không tương nghịch."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Không thay ví dụ “cái có con thỏ” bằng vật lý về mặt trăng; đây là sự tướng của cực thành tỷ độ trong giáo trình."
+      ],
+      "level": "Căn bản",
+      "tags": [
+        "mặt trăng",
+        "con thỏ"
+      ]
+    },
+    {
+      "id": "tai-quyet",
+      "title": "Tái quyết tri — chứng lại",
+      "unit": "tq",
+      "pages": "25–28",
+      "desc": "Một tri thức phi lượng chứng lại điều đã được lượng trước đó chứng.",
+      "definition": "“Liễu tri phi lượng chứng lại mà lượng trước đó dẫn đến nó đã chứng” là tánh tướng của Tái quyết tri.",
+      "points": [
+        [
+          "Cốt lõi",
+          "“Chứng lại” khác “chứng mới mẻ”: tái quyết tri không phải lượng."
+        ],
+        [
+          "Hai loại lớn",
+          "Hiện tiền tái quyết tri và Phân biệt tái quyết tri."
+        ],
+        [
+          "Sát-na",
+          "Sát-na đầu của hiện tiền / tỷ độ được xem xét theo lượng; các sát-na sau cần xét điều kiện tái quyết, không suy diễn máy móc."
+        ],
+        [
+          "Ngoại lệ chuyên sâu",
+          "Giáo trình tranh luận về Nhất thiết chủng trí sát-na thứ hai; không giản lược thành quy tắc “mọi sát-na thứ hai = tái quyết tri”."
+        ]
+      ],
+      "examples": [
+        "Tỷ độ ở sát-na thứ hai chứng âm thanh vô thường — ví dụ Phân biệt tái quyết tri."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tai-phan",
+      "title": "Phân loại Tái quyết tri",
+      "unit": "tq",
+      "pages": "27–28",
+      "desc": "Tách các dòng chứng lại trực tiếp và phân biệt chứng lại.",
+      "definition": "Hiện tiền tái quyết tri gồm 4; Phân biệt tái quyết tri gồm 2.",
+      "points": [
+        [
+          "Bốn Hiện tiền tái quyết tri",
+          "Căn hiện tiền tái quyết tri; Ý hiện tiền tái quyết tri; Tự chứng tái quyết tri; Du già hiện tiền tái quyết tri."
+        ],
+        [
+          "Hai Phân biệt tái quyết tri",
+          "Hiện tiền sở dẫn sinh phân biệt tái quyết tri; Tỷ lượng sở dẫn sinh phân biệt tái quyết tri."
+        ],
+        [
+          "Ví dụ 1",
+          "Định tri sinh sau khi hiện tiền chấp trì màu xanh, khẳng định màu xanh."
+        ],
+        [
+          "Ví dụ 2",
+          "Tỷ độ sát-na thứ hai chứng âm thanh vô thường."
+        ]
+      ],
+      "examples": [],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tu-sat",
+      "title": "Tứ sát tri — chưa thấu đạt",
+      "unit": "ts",
+      "pages": "28–32",
+      "desc": "Tâm nghiêng về một kết luận nhưng chưa thấu đạt nghĩa qua sự quán sát thích hợp.",
+      "definition": "“Liễu tri chỉ nhất ý đam trước vào pháp mà đó là xúc nhập cảnh chủ yếu của chính nó, nhưng không thấu đạt được quán sát nghĩa” là tánh tướng của Tứ sát tri.",
+      "points": [
+        [
+          "Khác Tỷ lượng",
+          "Tứ sát tri chưa đáp ứng điều kiện chứng bằng chánh nhân như Tỷ lượng."
+        ],
+        [
+          "Khác Nghi",
+          "Tứ sát tri nghiêng về một phía; nghi hoài nghi nhị biên."
+        ],
+        [
+          "Ba loại",
+          "Vô lý do; Bất định lý do; Y tương tự tứ sát tri."
+        ],
+        [
+          "Tánh tướng bổ sung",
+          "Sách còn dẫn một cách kiến lập chú trọng nhất ý chấp trì không sai loạn với tự xúc nhập cảnh, không dựa vào tự kinh nghiệm và chánh nhân (tr. 30)."
+        ]
+      ],
+      "examples": [
+        "Không có lý do mà nghĩ “âm thanh là vô thường”."
+      ],
+      "watch": [
+        "Giữ thuật ngữ “Tứ sát tri” theo chính tả trong SGK 2026."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tu-sat-ba",
+      "title": "Ba loại Tứ sát tri",
+      "unit": "ts",
+      "pages": "28–30",
+      "desc": "Phân biệt ba mức độ có hoặc không có lý do khi khẳng định.",
+      "definition": "Vô lý do tứ sát tri · Bất định lý do tứ sát tri · Y tương tự tứ sát tri.",
+      "points": [
+        [
+          "Vô lý do",
+          "Giác tri không dựa vào bất kỳ lý do nào để nghĩ âm thanh vô thường."
+        ],
+        [
+          "Bất định lý do",
+          "Nghĩ âm thanh vô thường từ nhân “tác”, nhưng chưa khẳng định được âm thanh là tác và nếu là tác thì nhất thiết vô thường."
+        ],
+        [
+          "Y tương tự",
+          "Nghĩ âm thanh vô thường dựa vào nhân “sở lượng”, là nhân tương tự, không phải chánh nhân."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Các ví dụ đều là tên một giác tri cụ thể, không lấy “âm thanh vô thường” trần trụi thay cho biện đề tâm thức."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "nghi",
+      "title": "Nghi — ba sắc thái",
+      "unit": "nghi",
+      "pages": "33–34",
+      "desc": "Nghi là tâm thức hoài nghi hai phía, có thể nghiêng thuận nghĩa, nghịch nghĩa hoặc cân bằng.",
+      "definition": "“Liễu tri hoài nghi nhị biên bằng tự lực (của chính nó)” là tánh tướng của Nghi.",
+      "points": [
+        [
+          "Hợp nghĩa nghi",
+          "Nghi chắc âm thanh là vô thường."
+        ],
+        [
+          "Bất hợp nghĩa nghi",
+          "Nghi chắc âm thanh là thường."
+        ],
+        [
+          "Đẳng phần nghi",
+          "Nghi âm thanh là thường hay vô thường."
+        ],
+        [
+          "Điểm nâng cao",
+          "Sách biện luận rằng có tâm sở nghi và tâm tương ứng với nghi; không đồng nhất mọi “nghi” với tâm sở."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Hợp nghĩa nghi chưa phải Tỷ lượng; bản chất vẫn là nghi."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "hnbd",
+      "title": "Hiển nhi bất định",
+      "unit": "hnbd",
+      "pages": "34–37",
+      "desc": "Đối cảnh hiện rõ nhưng tâm thức không thể đưa đến sự khẳng định tương ứng.",
+      "definition": "“Liễu tri mà tự tướng mà đã trở thành xúc nhập cảnh của chính nó trình hiện rõ ràng nhưng không có khả năng dẫn đến khẳng định cái đó” là tánh tướng của Hiển nhi bất định.",
+      "points": [
+        [
+          "Ba loại",
+          "Căn hiện tiền, Ý hiện tiền và Tự chứng hiện tiền đã trở thành Hiển nhi bất định."
+        ],
+        [
+          "Ví dụ Căn hiện tiền",
+          "Căn hiện tiền chấp màu xanh dẫn đến nghi ngờ không chắc đã thấy màu xanh."
+        ],
+        [
+          "Ví dụ Ý hiện tiền",
+          "Ý hiện tiền chấp sắc trong dòng tương tục của phàm phu."
+        ],
+        [
+          "Ví dụ Tự chứng",
+          "Tự chứng hiện tiền trải nghiệm một tri thức mà chính nó không được quyết định."
+        ],
+        [
+          "Không có Du già",
+          "Không có Hiển nhi bất định du già hiện tiền vì Du già hiện tiền nhất thiết chứng tự cảnh."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "“Cảnh trình hiện” không nhất thiết “cảnh được chứng/khẳng định”."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "dien-dao",
+      "title": "Điên đảo tri — sai loạn đối cảnh",
+      "unit": "dd",
+      "pages": "32–33, 38–39",
+      "desc": "Loại tri thức sai loạn với xúc nhập cảnh. Sách phân tích nhân sai loạn và hai cách phân loại.",
+      "definition": "“Liễu tri sai loạn đối với xúc nhập cảnh của chính nó” là tánh tướng của Điên đảo tri.",
+      "points": [
+        [
+          "Hai loại",
+          "Phân biệt điên đảo tri; Vô phân biệt điên đảo tri."
+        ],
+        [
+          "Phân biệt điên đảo",
+          "Sự tướng: Phân biệt chấp trì sừng thỏ; Chấp ngã cá thể."
+        ],
+        [
+          "Vô phân biệt điên đảo",
+          "Sự tướng: Căn tri mà một mặt trăng trình hiện như hai mặt trăng."
+        ],
+        [
+          "Bốn nguồn nhân sai loạn",
+          "Ở địa điểm (ngồi xe tưởng cây chuyển động), sở y (mắt nhặm thấy một trăng thành hai), cảnh (quay khúc củi cháy thấy bánh xe), vô gián duyên (tâm sân khuấy động làm cảnh trình hiện đỏ)."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "“Một mặt trăng trình hiện như hai mặt trăng” là ví dụ Điên đảo tri, không là Căn hiện tiền."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "mong-tri",
+      "title": "Mộng tri và 12 xứ",
+      "unit": "dd",
+      "pages": "38–40",
+      "desc": "Mộng tri thuộc ý tri; có những loại phân biệt và vô phân biệt điên đảo tri theo tính chất trình hiện.",
+      "definition": "",
+      "points": [
+        [
+          "Không có căn tri trong mơ",
+          "Nếu là mộng tri thì nhất thiết là Ý tri (theo sách)."
+        ],
+        [
+          "Không rõ ràng",
+          "Trong mơ thấy/nghe mờ ảo, thường phân tích là Phân biệt điên đảo tri."
+        ],
+        [
+          "Rõ ràng",
+          "Trong mơ hình, màu, âm thanh... trình hiện rõ có trường hợp Ý tri vô phân biệt điên đảo tri; sách đặt câu hỏi nghiên tầm về các trường hợp thiền quán trong mơ."
+        ],
+        [
+          "12 xứ",
+          "Sáu căn xứ: nhãn, nhĩ, tỷ, thiệt, thân, ý; sáu cảnh xứ: sắc, thanh, hương, vị, xúc, pháp."
+        ],
+        [
+          "Pháp xứ",
+          "Gồm các pháp thường hằng, bất tương ứng hành và tâm sở theo phân tích trong giáo trình."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Không kết luận mọi mộng tri “thấy rõ” nhất thiết điên đảo, vì sách nêu trường hợp cần nghiên tầm."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "ba-nhom",
+      "title": "Ba loại Giác tri theo sở thủ cảnh",
+      "unit": "ba",
+      "pages": "40–41",
+      "desc": "Phân nhóm theo tính chất sở thủ cảnh và có/không sai loạn.",
+      "definition": "Giác tri có 3 loại theo phân loại được trình bày ở trang 40.",
+      "points": [
+        [
+          "Nhóm 1",
+          "Phân biệt lấy nghĩa tổng làm sở thủ cảnh; cùng phạm vi với Phân biệt theo cách phân loại này."
+        ],
+        [
+          "Nhóm 2",
+          "Tri thức vô sai loạn vô phân biệt lấy tự tướng làm sở thủ cảnh; đồng nghĩa với Hiện tiền."
+        ],
+        [
+          "Nhóm 3",
+          "Sai loạn tri vô phân biệt lấy hữu vô minh hiện làm sở thủ cảnh; đồng nghĩa với Vô phân biệt điên đảo tri."
+        ],
+        [
+          "Điểm tinh tế",
+          "Giáo trình còn nêu phân biệt chấp duy thanh tổng nên không áp dụng máy móc ý “mọi phân biệt lấy nghĩa tổng” trong mọi trường hợp chi tiết."
+        ]
+      ],
+      "examples": [],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "sau-cap",
+      "title": "Sáu cặp phân loại hai Giác tri",
+      "unit": "doi",
+      "pages": "41",
+      "desc": "Sáu góc nhìn nhị phân, mỗi góc nhìn trả lời một câu hỏi khác nhau.",
+      "definition": "Giác tri có sáu phép chia làm 2 loại.",
+      "points": [
+        [
+          "Về sự chứng mới",
+          "Lượng ↔ Tri thức phi lượng."
+        ],
+        [
+          "Về cách nắm cảnh",
+          "Phân biệt ↔ Tri thức vô phân biệt."
+        ],
+        [
+          "Về sự sai loạn",
+          "Sai loạn tri ↔ Vô sai loạn tri."
+        ],
+        [
+          "Về căn phát sinh",
+          "Ý tri ↔ Căn tri."
+        ],
+        [
+          "Về cách nhập cảnh",
+          "Khiển nhập giác ↔ Thành nhập giác."
+        ],
+        [
+          "Về tổ chức tâm",
+          "Tâm ↔ Tâm sở."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Không gộp “phân biệt” với “phi lượng”: Tỷ lượng vừa là phân biệt vừa là lượng."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "luong",
+      "title": "Lượng và tri thức phi lượng",
+      "unit": "doi",
+      "pages": "41–43, 47",
+      "desc": "Phép chia quyết định liệu tâm thức có nhận biết mới mẻ và không nhầm lẫn không.",
+      "definition": "Lượng: “Liễu tri mới mẻ, không nhầm lẫn.” Tri thức phi lượng: “Liễu tri không là mới mẻ và không nhầm lẫn.”",
+      "points": [
+        [
+          "Hai loại Lượng",
+          "Hiện lượng và Tỷ lượng."
+        ],
+        [
+          "Năm phi lượng",
+          "Tái quyết tri, Tứ sát tri, Hiển nhi bất định, Nghi, Điên đảo tri."
+        ],
+        [
+          "Không suy theo tên gọi",
+          "Một tri thức không sai loạn có thể là phi lượng vì không còn mới mẻ, ví dụ Tái quyết tri."
+        ],
+        [
+          "Tách hai tiêu chí",
+          "“Mới mẻ” và “không nhầm lẫn” phải cùng xét theo cách xác định lượng."
+        ]
+      ],
+      "examples": [
+        "Tỷ lượng chứng âm thanh vô thường ở sát-na thứ nhất là Lượng; ở sát-na thứ hai phải xét Tái quyết tri."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tu-tha-luong",
+      "title": "Tự quyết định lượng và Tha quyết định lượng",
+      "unit": "doi",
+      "pages": "43–47",
+      "desc": "Phân tích liệu một lượng tự xác định được đối cảnh hay cần dựa vào lượng danh ngôn hậu sinh.",
+      "definition": "Tự quyết định lượng: có thể tự lực dẫn xuất quyết định bản chất rốt ráo của tự sở lượng; Tha quyết định lượng: không thể tự lực, cần dựa vào hậu sinh danh ngôn lượng khác.",
+      "points": [
+        [
+          "5 loại Tự quyết định",
+          "Thục tất nghĩa căn hiện lượng; Kiến năng tác dụng căn hiện lượng; Tự chứng hiện lượng; Du già hiện lượng; Tỷ lượng (phân loại được sách trình bày)."
+        ],
+        [
+          "3 loại Tha quyết định theo thanh thuyết",
+          "Hiển hiện tự quyết định sự thực tha quyết định; Tổng tự quyết định sai biệt tha quyết định; Liên hiển hiện dạ thị tha quyết định."
+        ],
+        [
+          "Sự tướng Tha quyết định 1",
+          "Thấy màu đỏ từ xa nhưng nghi có phải màu lửa, dù thực tế là màu lửa."
+        ],
+        [
+          "Sự tướng Tha quyết định 2",
+          "Thấy cây từ xa, nghi là cây tùng, dù thực tế là tùng."
+        ],
+        [
+          "Sự tướng Tha quyết định 3",
+          "Căn hiện lượng chấp trì màu xanh dẫn đến nghi không biết đã thấy màu xanh hay không — sách chú lượng giả lập ở loại thứ ba."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Không đồng nhất “tự/tha quyết định” với “tự/tha chứng”; là hai trục phân tích khác nhau."
+      ],
+      "level": "Nâng cao",
+      "tags": []
+    },
+    {
+      "id": "phan-biet",
+      "title": "Phân biệt và Vô phân biệt",
+      "unit": "doi",
+      "pages": "6, 47–48",
+      "desc": "Phân loại theo cách tâm thức nhập và chấp trì cảnh có trộn nghĩa tổng/thanh tổng hay không.",
+      "definition": "Phân biệt: “Đam trước tri chấp trì thích hợp trộn lẫn nghĩa tổng hay thanh tổng.” Tri thức vô phân biệt: “Liễu tri ly đam trước tri chấp trì thích hợp trộn lẫn nghĩa tổng hay thanh tổng.”",
+      "points": [
+        [
+          "Phân biệt",
+          "Đồng nghĩa với Khiển nhập giác. Tỷ độ, Tứ sát tri, Nghi và một phần Tái quyết tri, Điên đảo tri thuộc phía phân biệt."
+        ],
+        [
+          "Vô phân biệt",
+          "Đồng nghĩa với Thành nhập giác. Hiện tiền, Hiển nhi bất định và một phần Tái quyết tri, Điên đảo tri thuộc phía vô phân biệt."
+        ],
+        [
+          "Nghĩa tổng",
+          "Đối tượng khái niệm; trong phân biệt có thể trộn nghĩa tổng với đối tượng được nhắc đến."
+        ],
+        [
+          "Lưu ý tông phái",
+          "Sách nêu cách hiểu “ly phân biệt” và phê bình một số phép giải thích không chính xác ở tr. 6–8."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Đừng diễn giải “ly phân biệt” chỉ đơn giản là “không phải phân biệt”; sách đã bác bỏ cách đồng nhất này."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "sai-loan",
+      "title": "Sai loạn tri và Vô sai loạn tri",
+      "unit": "doi",
+      "pages": "48",
+      "desc": "Đánh giá sai hay không sai với hiện cảnh của chính tri thức.",
+      "definition": "Sai loạn tri: “Liễu tri sai loạn đối với hiện cảnh của chính nó.” Vô sai loạn tri: “Liễu tri không sai loạn đối với hiện cảnh của chính nó.”",
+      "points": [
+        [
+          "Sai loạn tri",
+          "Gồm Điên đảo tri và tất cả Phân biệt, theo cách trình bày trong giáo trình."
+        ],
+        [
+          "Vô sai loạn tri",
+          "Đồng nghĩa với Hiện tiền trong hệ Kinh bộ tông mà sách đang sử dụng."
+        ],
+        [
+          "Phân biệt vs sai loạn",
+          "Một Tỷ lượng có thể là Lượng nhưng vẫn được phân loại là sai loạn tri theo hiện cảnh; các thuộc tính không loại trừ nhau vì xét những điều kiện khác nhau."
+        ],
+        [
+          "Khác tông phái",
+          "Duy thức tông có kiến lập khác: hiện tiền gồm sai loạn tri và vô sai loạn tri (SGK tr. 48)."
+        ]
+      ],
+      "examples": [],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "ytri",
+      "title": "Ý tri và Căn tri",
+      "unit": "doi",
+      "pages": "49–50",
+      "desc": "Phân biệt dựa trên tăng thượng duyên bất cộng là ý căn hay hữu sắc căn.",
+      "definition": "Ý tri: “Liễu tri sanh dựa vào tăng thượng duyên bất cộng của chính nó là ý căn.” Căn tri: “Liễu tri sanh dựa vào tăng thượng duyên bất cộng của chính nó là hữu sắc căn.”",
+      "points": [
+        [
+          "Căn tri",
+          "Năm loại: Nhãn tri, Nhĩ tri, Tỷ tri, Thiệt tri, Thân tri."
+        ],
+        [
+          "Ý tri",
+          "Bao gồm tâm thức sinh dựa vào ý căn; không phải mọi Ý tri là Ý hiện tiền."
+        ],
+        [
+          "Ý và Ý tri: mushi",
+          "Bốn khả năng trong SGK tr. 49: chỉ ý (nhãn thức); chỉ ý tri (cảm thọ tùy hành ý thức); cả hai (ý thức); không cả hai (tâm sở tùy hành căn thức)."
+        ],
+        [
+          "Căn hiện tiền và Căn tri: musum",
+          "Nếu là Căn hiện tiền thì nhất thiết là Căn tri; nhưng có Căn tri điên đảo không là Căn hiện tiền."
+        ]
+      ],
+      "examples": [
+        "Mắt bị nhặm thấy một mặt trăng thành hai: Nhãn tri (Căn tri), nhưng không là Căn hiện tiền."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "khien-thanh",
+      "title": "Khiển nhập giác và Thành nhập giác",
+      "unit": "doi",
+      "pages": "53–54",
+      "desc": "Một cách nhìn khác về phân biệt và vô phân biệt, xét lực nhập vào tự cảnh.",
+      "definition": "Khiển nhập giác: “Liễu tri nhập vào tự cảnh bởi lực ký hiệu.” Thành nhập giác: “Liễu tri nhập vào tự cảnh bởi lực thực hữu.”",
+      "points": [
+        [
+          "Đồng nghĩa 1",
+          "Khiển nhập giác ↔ Phân biệt."
+        ],
+        [
+          "Đồng nghĩa 2",
+          "Thành nhập giác ↔ Tri thức vô phân biệt."
+        ],
+        [
+          "Cách phân biệt",
+          "Hỏi tri thức này nhập cảnh dựa vào ký hiệu/khái niệm hay do lực thực hữu của đối cảnh?"
+        ]
+      ],
+      "examples": [],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "tam-tamso",
+      "title": "Tâm và Tâm sở",
+      "unit": "doi",
+      "pages": "55",
+      "desc": "Hai thành phần liên hệ theo quan hệ tương ứng, không đồng nhất Tâm sở với tâm vương.",
+      "definition": "Tâm: “Tương ứng với tâm sở mà tâm sở đó hiện hữu như là tùy hành của chính nó.” Tâm sở: “Tương ứng với tâm mà tâm đó có chính nó như là tùy hành.”",
+      "points": [
+        [
+          "Tâm",
+          "Tâm (tâm vương), ý, thức đồng nghĩa. Sáu tâm: nhãn thức, nhĩ thức, tỷ thức, thiệt thức, thân thức, ý thức."
+        ],
+        [
+          "Tâm sở",
+          "Những tâm sở đi cùng tâm; ví dụ cảm thọ tùy hành của nhãn thức."
+        ],
+        [
+          "Năm tướng tương ứng",
+          "Sở duyên tương ứng; hành tướng tương ứng; thời tương ứng; sở y tương ứng; chất tương ứng."
+        ]
+      ],
+      "examples": [
+        "Nhãn thức và cảm thọ đi chung với nó: một tâm và một tâm sở tương ứng."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "51-tamso",
+      "title": "51 Tâm sở — sáu nhóm",
+      "unit": "doi",
+      "pages": "56–57",
+      "desc": "Bảng ghi nhớ hệ thống 51 tâm sở đúng theo danh sách của giáo trình.",
+      "definition": "Tâm sở chia thành 6 nhóm, tổng cộng 51.",
+      "points": [
+        [
+          "5 Ngũ biến hành",
+          "Thọ · Tưởng · Tư · Tác ý · Xúc."
+        ],
+        [
+          "5 Ngũ biệt cảnh",
+          "Dục · Thắng giải · Niệm · Định · Huệ."
+        ],
+        [
+          "11 Thiện",
+          "Tín · Tàm · Quý · Vô tham · Vô oán · Vô si · Tinh tấn · Khinh an · Bất phóng dật · Hành xả · Bất hại."
+        ],
+        [
+          "6 Phiền não căn bản",
+          "Tham · Sân · Mạn · Vô minh hữu phiền não · Nghi hữu phiền não · Kiến hữu phiền não (kiến gồm năm loại)."
+        ],
+        [
+          "20 Tùy phiền não",
+          "Phẫn · Hận · Phú · Não · Tật · Xan · Cuống · Xiểm · Kiêu · Hại · Vô tàm · Vô quý · Trạo cử · Mơ màng · Bất tín · Lười biếng · Phóng dật · Thất niệm · Bất chánh tri · Tán loạn."
+        ],
+        [
+          "4 Bất định",
+          "Ngủ · Hối · Từ · Tầm."
+        ],
+        [
+          "Kiểm đếm",
+          "5 + 5 + 11 + 6 + 20 + 4 = 51."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Danh sách giữ nguyên các tên (“vô oán”, “mơ màng”, “từ”, “tầm”) như bản SGK 2026; không tự đổi thành thuật ngữ của nguồn khác."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "musum-mushi",
+      "title": "Musum – mushi – đồng nghĩa – tương nghịch",
+      "unit": "bk",
+      "pages": "4, 49–54; bài giảng",
+      "desc": "Bốn kiểu quan hệ cần nhận diện trước khi lập luận biện kinh.",
+      "definition": "",
+      "points": [
+        [
+          "Musum — ba khả năng",
+          "Chỉ có một chiều nhất thiết: A ⇒ B; B ⇏ A. Có A∩B và chỉ-B; không có chỉ-A. Ví dụ: Căn hiện tiền và Căn tri."
+        ],
+        [
+          "Mushi — bốn khả năng",
+          "Cả hai chiều đều không nhất thiết: có chỉ A, chỉ B, cả hai, không cả hai. Ví dụ: Ý và Ý tri (SGK tr. 49)."
+        ],
+        [
+          "Đồng nghĩa",
+          "Hai tập có cùng ngoại diên; nếu A thì nhất thiết B, và nếu B thì nhất thiết A. Ví dụ Giác tri / Liễu tri / Tri thức."
+        ],
+        [
+          "Tương nghịch",
+          "Không có trường hợp vừa A vừa B; phải xét tiếp nếu bài yêu cầu tính cùng bao phủ phạm vi."
+        ],
+        [
+          "Kỹ thuật biện kinh",
+          "Đặt A, B → thử từng chiều nhất thiết → tìm sự tướng phản ví dụ đúng loại pháp → kiểm tra hai khả năng giao nhau và ngoài cả hai."
+        ]
+      ],
+      "examples": [
+        "A = Căn hiện tiền, B = Căn tri: nhãn tri thấy hai mặt trăng do mắt nhặm là chỉ B; nhãn tri chấp trì màu xanh là cả hai."
+      ],
+      "watch": [
+        "Không tự đổi nhãn musum/mushi của trường."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "bon-o",
+      "title": "Bốn ô sự tướng — công cụ suy luận",
+      "unit": "bk",
+      "pages": "49–54; bài giảng",
+      "desc": "Lập bảng 2 × 2 cho một cặp khái niệm, sau đó loại ô không thể xảy ra.",
+      "definition": "",
+      "points": [
+        [
+          "Ô 1 · Chỉ A",
+          "A và không B."
+        ],
+        [
+          "Ô 2 · Chỉ B",
+          "B và không A."
+        ],
+        [
+          "Ô 3 · Cả hai",
+          "A và B."
+        ],
+        [
+          "Ô 4 · Không cả hai",
+          "Không A và không B."
+        ],
+        [
+          "Musum",
+          "Chỉ một trong hai ô “chỉ A/chỉ B” có sự tướng; ô cả hai có, ô không cả hai có nếu miền pháp rộng."
+        ],
+        [
+          "Mushi",
+          "Cả bốn ô đều có sự tướng."
+        ],
+        [
+          "Tương nghịch",
+          "Ô cả hai không có sự tướng."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Phải định nghĩa rõ miền đang xét: tất cả pháp, tất cả giác tri hay một loại tâm thức."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "so-luong",
+      "title": "Sở lượng, Lượng và thời sát-na",
+      "unit": "bk",
+      "pages": "5, 23–28, 41–47",
+      "desc": "Một cụm dễ nhầm trong bài luyện xác định quan hệ giữa nhận thức và đối tượng.",
+      "definition": "",
+      "points": [
+        [
+          "Sở lượng",
+          "Pháp được một lượng chứng; không đồng nhất sở lượng với chính tâm thức là lượng."
+        ],
+        [
+          "Hiện lượng và tỷ lượng",
+          "Đều thuộc Lượng, khác theo cách chứng cảnh."
+        ],
+        [
+          "Tỷ độ không nhất thiết là tỷ lượng",
+          "Tỷ độ ở sát-na sau có thể không mới mẻ."
+        ],
+        [
+          "Thường hằng",
+          "Khi sử dụng sự tướng “không gian vô vi”, theo cách lập luận đã học: “Là Thường hằng bởi vì là đồng vị của vừa không là sát-na và vừa là pháp.”"
+        ],
+        [
+          "Cực thành tỷ độ",
+          "Ví dụ sách dùng: “Tỷ độ tri nhận cái có con thỏ phù hợp gọi là ‘mặt trăng’.”"
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "“Không gian vô vi” và chứng minh Thường hằng ở đây là quy ước bài giảng; không thay bằng câu diễn giải khác."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "phan-biet-chung",
+      "title": "Phân biệt chấp trì / Phân biệt chứng",
+      "unit": "bk",
+      "pages": "50–51",
+      "desc": "Một cặp được sách hướng dẫn tìm đủ bốn khả năng (mushi).",
+      "definition": "",
+      "points": [
+        [
+          "Chỉ chấp trì",
+          "Tứ sát tri nghĩ đến cái bình: chấp trì nhưng không nhất thiết chứng."
+        ],
+        [
+          "Chỉ chứng",
+          "Phân biệt chứng cái bình và nghĩa tổng của cái bình: chứng nhưng không là phân biệt chấp trì cái bình theo sự phân biệt kỹ thuật trong sách."
+        ],
+        [
+          "Cả hai",
+          "Phân biệt chấp trì cái bình được dẫn xuất sau nhãn tri chấp trì cái bình."
+        ],
+        [
+          "Không cả hai",
+          "Một tâm thức không phân biệt chấp trì/chứng cái bình, chẳng hạn nhãn tri chấp trì âm thanh không phải ví dụ phù hợp vì nhãn tri không chấp âm thanh; chọn một tâm thức hợp lệ khác, như nhĩ tri chấp trì âm thanh."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Đặt đúng đầy đủ cụm “Phân biệt chứng cái bình và nghĩa tổng của cái bình” theo ví dụ gốc."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "ty-pb",
+      "title": "Tỷ lượng đối với pháp đó / Phân biệt đối với pháp đó",
+      "unit": "bk",
+      "pages": "51–52",
+      "desc": "Hai cách gắn “đối với pháp đó” có thể dẫn đến quan hệ mushi trong sách.",
+      "definition": "",
+      "points": [
+        [
+          "Chỉ Tỷ lượng",
+          "Một tỷ lượng có thể chứng gián tiếp một pháp nhưng không là phân biệt đối với chính pháp đó (cần cố định pháp trong biện đề)."
+        ],
+        [
+          "Chỉ Phân biệt",
+          "Niệm tri nhớ đến cái bình sau nhãn tri chấp trì cái bình: phân biệt về cái bình, không là tỷ lượng về cái bình."
+        ],
+        [
+          "Cả hai",
+          "Tỷ lượng chứng âm thanh vô thường (xét đúng pháp âm thanh vô thường)."
+        ],
+        [
+          "Không cả hai",
+          "Nhãn tri chấp trì cái bình."
+        ],
+        [
+          "Nguyên tắc",
+          "Đối tượng “pháp đó” phải được giữ nguyên suốt suy luận, tránh đổi pháp giữa các bước."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Đây là bài biện kinh nâng cao, có chi tiết trực tiếp/gián tiếp; đối chiếu SGK tr. 51–52 khi viết bản chứng minh đầy đủ."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "nhan-chung",
+      "title": "Chứng từ nhân / Chứng bởi nhân; hiện tiền chứng",
+      "unit": "bk",
+      "pages": "52–54",
+      "desc": "Hai cặp gần nghĩa nhưng không tương đương; sách đưa ví dụ đường mía và cái bình.",
+      "definition": "",
+      "points": [
+        [
+          "Chứng từ / chứng bởi nhân",
+          "Nếu chứng bởi nhân của cái đó thì nhất thiết chứng từ nhân của cái đó; chiều ngược không nhất thiết."
+        ],
+        [
+          "Đường mía",
+          "Tỷ độ chứng sắc của đường mía từ nhân là vị đường mía hiện tại, nhưng không nhất thiết chứng bởi nhân ấy theo lập luận sở lập."
+        ],
+        [
+          "Chứng cảnh bằng hiện tiền",
+          "Nếu chứng cảnh bằng hiện tiền thì nhất thiết hiện tiền chứng cảnh."
+        ],
+        [
+          "Hiện tiền chứng cảnh",
+          "Chiều ngược không nhất thiết; nhãn tri chấp trì cái bình gián tiếp chứng sự không có đồng vị vừa là bình vừa không là bình."
+        ]
+      ],
+      "examples": [],
+      "watch": [
+        "Giữ phân biệt “từ” và “bởi”; “hiện tiền chứng” và “chứng bằng hiện tiền”."
+      ],
+      "level": "Căn bản",
+      "tags": []
+    },
+    {
+      "id": "quy-trinh",
+      "title": "Quy trình tự giải một bài biện kinh",
+      "unit": "bk",
+      "pages": "Phương pháp học",
+      "desc": "Quy trình thao tác nhằm đưa tánh tướng thành suy luận và sự tướng, không thay thế giáo trình.",
+      "definition": "",
+      "points": [
+        [
+          "Bước 1",
+          "Viết A và B nguyên văn; xác định cùng một loại pháp và cách dùng “đối với pháp đó”."
+        ],
+        [
+          "Bước 2",
+          "Đọc tánh tướng, dùng định nghĩa để thử A ⇒ B và B ⇒ A."
+        ],
+        [
+          "Bước 3",
+          "Nếu không nhất thiết, đặt một biện đề là tâm thức/pháp phù hợp và chứng minh cả tính chất có/không."
+        ],
+        [
+          "Bước 4",
+          "Thử sự tướng giao A∩B và ngoài A∪B, tùy loại quan hệ."
+        ],
+        [
+          "Bước 5",
+          "Đối chiếu từ khóa chính xác theo SGK, tránh dùng kiến thức phần chưa học làm sự tướng khi bài tập giới hạn phạm vi."
+        ],
+        [
+          "Bước 6",
+          "Ghi LG: / ĐLG: nguyên văn nếu biên tập đối thoại, không tự rút gọn; chữ biên tập bổ sung phải đặt [ngoặc vuông]."
+        ]
+      ],
+      "examples": [
+        "A = Căn hiện tiền; B = Căn tri → musum. Tìm nhãn tri điên đảo làm phản ví dụ cho B ⇒ A."
+      ],
+      "watch": [],
+      "level": "Căn bản",
+      "tags": []
+    }
+  ],
+  "quiz": [
+    [
+      "Giác tri, Liễu tri và Tri thức có quan hệ gì trong SGK?",
+      [
+        "Đồng nghĩa",
+        "Tương nghịch",
+        "Musum",
+        "Mushi"
+      ],
+      0,
+      "SGK tr. 3 nêu rõ ba thuật ngữ đồng nghĩa.",
+      "nen"
+    ],
+    [
+      "Ý nghĩa của Liễu tri là gì?",
+      [
+        "Khả năng chấp trì cảnh",
+        "Chỉ có cảm thọ",
+        "Suy luận từ nhân",
+        "Không có đối cảnh"
+      ],
+      0,
+      "“Khả năng chấp trì cảnh” là cách giải thích trong SGK tr. 3.",
+      "nen"
+    ],
+    [
+      "Giác tri được sách phân loại theo những số lượng nào?",
+      [
+        "7, 3 và 2",
+        "5, 4 và 3",
+        "8 và 4",
+        "Chỉ 7"
+      ],
+      0,
+      "Trục kiến lập SGK: 7 loại, 3 loại và 2 loại.",
+      "nen"
+    ],
+    [
+      "Đâu không thuộc bảy loại Giác tri?",
+      [
+        "Thường hằng",
+        "Nghi",
+        "Tái quyết tri",
+        "Tỷ độ"
+      ],
+      0,
+      "Thường hằng là thuộc tính/pháp, không phải một trong bảy loại giác tri.",
+      "hien"
+    ],
+    [
+      "Tánh tướng Hiện tiền có yếu tố nào?",
+      [
+        "Ly phân biệt và không sai loạn",
+        "Dựa chánh nhân và mới mẻ",
+        "Hoài nghi nhị biên",
+        "Sai loạn với xúc nhập cảnh"
+      ],
+      0,
+      "Theo SGK tr. 5.",
+      "hien"
+    ],
+    [
+      "Hiện lượng khác Hiện tiền chủ yếu vì thêm gì?",
+      [
+        "Mới mẻ, không nhầm lẫn",
+        "Nghi",
+        "Sai loạn",
+        "Là tâm sở"
+      ],
+      0,
+      "Tánh tướng Hiện lượng bổ sung mới mẻ, không nhầm lẫn.",
+      "hien"
+    ],
+    [
+      "Căn hiện tiền được chia bao nhiêu loại?",
+      [
+        "5",
+        "3",
+        "2",
+        "7"
+      ],
+      0,
+      "Sắc, thanh, hương, vị, xúc.",
+      "hien"
+    ],
+    [
+      "Tăng thượng duyên bất cộng của chấp sắc căn hiện tiền là gì?",
+      [
+        "Nhãn căn",
+        "Sắc",
+        "Ý căn",
+        "Tâm sở"
+      ],
+      0,
+      "Nhãn căn là tăng thượng duyên bất cộng; sắc là sở duyên duyên.",
+      "hien"
+    ],
+    [
+      "Sở duyên duyên của chấp thanh căn hiện tiền là gì?",
+      [
+        "Thanh",
+        "Nhĩ căn",
+        "Ý căn",
+        "Nhãn căn"
+      ],
+      0,
+      "Thanh là đối cảnh tương ứng; nhĩ căn là tăng thượng duyên bất cộng.",
+      "hien"
+    ],
+    [
+      "Điều nào đúng về Căn hiện tiền và Căn tri?",
+      [
+        "Căn hiện tiền ⇒ Căn tri, chiều ngược không nhất thiết",
+        "Đồng nghĩa",
+        "Tương nghịch",
+        "Căn tri ⇒ Căn hiện tiền"
+      ],
+      0,
+      "Quan hệ musum.",
+      "hien"
+    ],
+    [
+      "Mắt nhặm làm một trăng hiện thành hai trăng là ví dụ của?",
+      [
+        "Căn tri điên đảo",
+        "Căn hiện tiền",
+        "Tỷ lượng",
+        "Du già hiện tiền"
+      ],
+      0,
+      "Một Căn tri sai loạn, không đủ điều kiện Căn hiện tiền.",
+      "hien"
+    ],
+    [
+      "Ý hiện tiền sinh từ tăng thượng duyên bất cộng là gì?",
+      [
+        "Ý căn",
+        "Nhãn căn",
+        "Thân căn",
+        "Sắc"
+      ],
+      0,
+      "SGK tr. 12.",
+      "hien"
+    ],
+    [
+      "Ý hiện tiền được chia làm hai loại theo tiêu chí nào?",
+      [
+        "Được chỉ ra ngay thời điểm này / không là cái đó",
+        "Thiện / bất thiện",
+        "Căn / ý",
+        "Lượng / không lượng"
+      ],
+      0,
+      "SGK tr. 12–16.",
+      "hien"
+    ],
+    [
+      "Ví dụ của Ý hiện tiền mà không là loại ngay thời điểm này là?",
+      [
+        "Tha tâm thông",
+        "Nhĩ tri chấp âm thanh",
+        "Nhãn tri chấp sắc",
+        "Căn tri điên đảo"
+      ],
+      0,
+      "Tha tâm thông được dẫn trong SGK.",
+      "hien"
+    ],
+    [
+      "Tự chứng hiện tiền lấy gì làm đối cảnh chủ yếu trong ví dụ?",
+      [
+        "Tâm thức khác",
+        "Chỉ màu sắc",
+        "Chỉ âm thanh",
+        "Chỉ cái bình bằng mắt"
+      ],
+      0,
+      "Tự chứng trải nghiệm một tri thức.",
+      "hien"
+    ],
+    [
+      "Thuật ngữ đúng trong biện đề về Tự chứng hiện tiền là?",
+      [
+        "Trải nghiệm",
+        "Kinh nghiệm",
+        "Tưởng tượng",
+        "Nghe thấy"
+      ],
+      0,
+      "Bài giảng yêu cầu dùng “trải nghiệm”.",
+      "hien"
+    ],
+    [
+      "Du già hiện tiền thuộc dòng tương tục của ai?",
+      [
+        "Thánh giả",
+        "Mọi phàm phu",
+        "Chỉ trẻ nhỏ",
+        "Chỉ người mơ"
+      ],
+      0,
+      "Một thành phần trong tánh tướng Du già hiện tiền.",
+      "hien"
+    ],
+    [
+      "Có bao nhiêu loại Du già hiện tiền?",
+      [
+        "3",
+        "5",
+        "7",
+        "2"
+      ],
+      0,
+      "Thinh văn, Duyên giác, Đại thừa.",
+      "hien"
+    ],
+    [
+      "Tự hiện tiền có mấy loại trong cách phân loại chi tiết?",
+      [
+        "7",
+        "4",
+        "3",
+        "2"
+      ],
+      0,
+      "6 phân biệt và 1 vô phân biệt.",
+      "hien"
+    ],
+    [
+      "Tự hiện tiền có đồng nhất Tự chứng hiện tiền?",
+      [
+        "Không",
+        "Có",
+        "Chỉ trong 3 cách chia",
+        "Chỉ khi là lượng"
+      ],
+      0,
+      "Hai thuật ngữ thuộc hai mục khác nhau.",
+      "hien"
+    ],
+    [
+      "Tỷ độ dựa vào đâu để không nhầm lẫn sở lượng ẩn tế?",
+      [
+        "Chánh nhân",
+        "Ý thích",
+        "Nghi",
+        "Ảo giác"
+      ],
+      0,
+      "Chánh nhân là sở y của Tỷ độ.",
+      "ty"
+    ],
+    [
+      "Tỷ độ và Tỷ lượng có đồng nghĩa hoàn toàn?",
+      [
+        "Không",
+        "Có",
+        "Là tương nghịch",
+        "Không loại nào là giác tri"
+      ],
+      0,
+      "Tỷ lượng có tiêu chí mới mẻ; Tỷ độ không nhất thiết là lượng.",
+      "ty"
+    ],
+    [
+      "Ba loại Tỷ độ gồm gì?",
+      [
+        "Tín hứa, Cực thành, Sự thế",
+        "Nhãn, Nhĩ, Tỷ",
+        "Thiện, Ác, Vô ký",
+        "Tâm, Tâm sở, Ý"
+      ],
+      0,
+      "SGK tr. 23–25.",
+      "ty"
+    ],
+    [
+      "“Có con thỏ phù hợp gọi là mặt trăng” là sự tướng của?",
+      [
+        "Cực thành tỷ độ",
+        "Sự thế tỷ độ",
+        "Ý hiện tiền",
+        "Nghi"
+      ],
+      0,
+      "Theo SGK tr. 24.",
+      "ty"
+    ],
+    [
+      "Tỷ độ chứng âm thanh vô thường là ví dụ của?",
+      [
+        "Sự thế tỷ độ",
+        "Cực thành tỷ độ",
+        "Mộng tri",
+        "Tâm sở bất định"
+      ],
+      0,
+      "Sở lượng lược ẩn tế.",
+      "ty"
+    ],
+    [
+      "Tái quyết tri mang đặc trưng nào?",
+      [
+        "Phi lượng, chứng lại cái lượng trước đã chứng",
+        "Mới mẻ",
+        "Hoài nghi nhị biên",
+        "Sai loạn với xúc nhập cảnh"
+      ],
+      0,
+      "SGK tr. 25.",
+      "tq"
+    ],
+    [
+      "Hiện tiền tái quyết tri được chia thành mấy loại?",
+      [
+        "4",
+        "5",
+        "2",
+        "7"
+      ],
+      0,
+      "Căn, Ý, Tự chứng và Du già.",
+      "tq"
+    ],
+    [
+      "Phân biệt tái quyết tri gồm bao nhiêu loại?",
+      [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      0,
+      "Hiện tiền sở dẫn sinh và Tỷ lượng sở dẫn sinh.",
+      "tq"
+    ],
+    [
+      "Tứ sát tri khác Tỷ lượng ở chỗ nào?",
+      [
+        "Chưa thấu đạt quán sát nghĩa",
+        "Chứng do chánh nhân và mới mẻ",
+        "Chỉ thuộc giác quan",
+        "Là Du già hiện tiền"
+      ],
+      0,
+      "Tứ sát tri chưa đáp ứng điều kiện thấu đạt.",
+      "ts"
+    ],
+    [
+      "Tứ sát tri nào nghĩ âm thanh vô thường mà không có lý do?",
+      [
+        "Vô lý do tứ sát tri",
+        "Y tương tự tứ sát tri",
+        "Sự thế tỷ độ",
+        "Tái quyết tri"
+      ],
+      0,
+      "Ví dụ tr. 29.",
+      "ts"
+    ],
+    [
+      "Tứ sát tri lấy nhân “sở lượng” là?",
+      [
+        "Y tương tự tứ sát tri",
+        "Vô lý do",
+        "Tín hứa tỷ độ",
+        "Hiện lượng"
+      ],
+      0,
+      "Nhân tương tự, không là chánh nhân.",
+      "ts"
+    ],
+    [
+      "Nghi được phân bao nhiêu loại?",
+      [
+        "3",
+        "4",
+        "2",
+        "5"
+      ],
+      0,
+      "Hợp nghĩa, bất hợp nghĩa, đẳng phần.",
+      "nghi"
+    ],
+    [
+      "“Âm thanh thường hay vô thường?” thuộc kiểu nào?",
+      [
+        "Đẳng phần nghi",
+        "Hợp nghĩa nghi",
+        "Tỷ lượng",
+        "Hiện tiền"
+      ],
+      0,
+      "Hai phía cân bằng.",
+      "nghi"
+    ],
+    [
+      "Hợp nghĩa nghi có phải Tỷ lượng?",
+      [
+        "Không",
+        "Luôn luôn",
+        "Chỉ trong mơ",
+        "Khi ở sát-na thứ hai"
+      ],
+      0,
+      "Vẫn là Nghi.",
+      "nghi"
+    ],
+    [
+      "Hiển nhi bất định có đặc trưng nào?",
+      [
+        "Cảnh hiện rõ nhưng không dẫn tới khẳng định",
+        "Nhất thiết chứng cảnh",
+        "Là đam trước tri mới mẻ",
+        "Chỉ có ở Thánh giả"
+      ],
+      0,
+      "Định nghĩa SGK tr. 34.",
+      "hnbd"
+    ],
+    [
+      "Có Hiển nhi bất định Du già hiện tiền không?",
+      [
+        "Không",
+        "Có",
+        "Chỉ khi là Tỷ độ",
+        "Chỉ trong mộng"
+      ],
+      0,
+      "SGK nêu Du già hiện tiền nhất thiết chứng tự cảnh.",
+      "hnbd"
+    ],
+    [
+      "Điên đảo tri sai loạn đối với gì?",
+      [
+        "Xúc nhập cảnh của chính nó",
+        "Chánh nhân",
+        "Ý căn",
+        "Cảm thọ"
+      ],
+      0,
+      "Tánh tướng Điên đảo tri.",
+      "dd"
+    ],
+    [
+      "Quay nhanh khúc củi cháy thấy như bánh xe: nhân sai loạn ở đâu?",
+      [
+        "Ở cảnh",
+        "Ở địa điểm",
+        "Ở sở y",
+        "Ở vô gián duyên"
+      ],
+      0,
+      "SGK tr. 33.",
+      "dd"
+    ],
+    [
+      "Trong mơ có căn tri không (theo SGK)?",
+      [
+        "Không",
+        "Có mọi trường hợp",
+        "Chỉ khi thấy rõ",
+        "Chỉ khi nghe thấy"
+      ],
+      0,
+      "Mộng tri nhất thiết là Ý tri.",
+      "dd"
+    ],
+    [
+      "Ba loại giác tri ở tr. 40 phân loại theo yếu tố gì?",
+      [
+        "Sở thủ cảnh",
+        "Số lượng tâm sở",
+        "Thời tiết",
+        "Chỉ sắc"
+      ],
+      0,
+      "Phân biệt / vô sai loạn vô phân biệt / sai loạn vô phân biệt.",
+      "ba"
+    ],
+    [
+      "Lượng được định số gồm?",
+      [
+        "Hiện lượng và Tỷ lượng",
+        "Nghi và Hiển nhi bất định",
+        "Căn tri và Ý tri",
+        "Tâm và Tâm sở"
+      ],
+      0,
+      "SGK tr. 41.",
+      "doi"
+    ],
+    [
+      "Tỷ lượng có thể là phân biệt mà vẫn là lượng không?",
+      [
+        "Có",
+        "Không",
+        "Chỉ khi mộng",
+        "Chỉ khi sai loạn giác quan"
+      ],
+      0,
+      "Hai trục phân loại độc lập.",
+      "doi"
+    ],
+    [
+      "Sai loạn tri được xét theo cảnh nào?",
+      [
+        "Hiện cảnh",
+        "Sở lượng ẩn tế",
+        "Ý căn",
+        "Chỉ sắc"
+      ],
+      0,
+      "Tánh tướng Sai loạn tri.",
+      "doi"
+    ],
+    [
+      "Khiển nhập giác đồng nghĩa với?",
+      [
+        "Phân biệt",
+        "Vô phân biệt",
+        "Du già hiện tiền",
+        "Căn tri"
+      ],
+      0,
+      "Nhập cảnh bởi lực ký hiệu.",
+      "doi"
+    ],
+    [
+      "Thành nhập giác đồng nghĩa với?",
+      [
+        "Tri thức vô phân biệt",
+        "Phân biệt",
+        "Tỷ lượng",
+        "Nghi"
+      ],
+      0,
+      "Nhập cảnh bởi lực thực hữu.",
+      "doi"
+    ],
+    [
+      "Ý và Ý tri có quan hệ gì theo ví dụ tr. 49?",
+      [
+        "Mushi",
+        "Musum",
+        "Đồng nghĩa",
+        "Tương nghịch"
+      ],
+      0,
+      "Sách đưa 4 khả năng.",
+      "doi"
+    ],
+    [
+      "Có bao nhiêu Tâm (tâm vương) trong SGK?",
+      [
+        "6",
+        "5",
+        "51",
+        "7"
+      ],
+      0,
+      "Nhãn, nhĩ, tỷ, thiệt, thân, ý thức.",
+      "doi"
+    ],
+    [
+      "51 Tâm sở chia làm bao nhiêu nhóm?",
+      [
+        "6",
+        "7",
+        "3",
+        "2"
+      ],
+      0,
+      "5 + 5 + 11 + 6 + 20 + 4.",
+      "doi"
+    ],
+    [
+      "Tâm và Tâm sở tương ứng theo mấy tướng?",
+      [
+        "5",
+        "4",
+        "2",
+        "7"
+      ],
+      0,
+      "Sở duyên, hành tướng, thời, sở y, chất.",
+      "doi"
+    ],
+    [
+      "Musum nói lên điều gì?",
+      [
+        "Một chiều nhất thiết",
+        "Bốn ô đều có sự tướng",
+        "Cả hai chiều nhất thiết",
+        "Không thể vừa A vừa B"
+      ],
+      0,
+      "Quan hệ bao hàm một chiều.",
+      "bk"
+    ],
+    [
+      "Mushi được nhận biết bằng gì?",
+      [
+        "Bốn khả năng đều có sự tướng",
+        "Chỉ có chiều A ⇒ B",
+        "Hai tập bằng nhau",
+        "Không có giao"
+      ],
+      0,
+      "Quan hệ bốn khả năng.",
+      "bk"
+    ],
+    [
+      "Nếu là Căn hiện tiền thì nhất thiết là Căn tri?",
+      [
+        "Đúng",
+        "Sai",
+        "Chỉ khi là Nghi",
+        "Chỉ trong mơ"
+      ],
+      0,
+      "Tánh tướng Căn hiện tiền bảo đảm là Căn tri.",
+      "bk"
+    ],
+    [
+      "“Chứng bởi nhân của cái đó” so với “chứng từ nhân của cái đó”?",
+      [
+        "Chứng bởi ⇒ chứng từ",
+        "Chứng từ ⇒ chứng bởi",
+        "Đồng nghĩa",
+        "Tương nghịch"
+      ],
+      0,
+      "Theo SGK tr. 53.",
+      "bk"
+    ],
+    [
+      "“Chứng cảnh bằng hiện tiền” so với “hiện tiền chứng cảnh”?",
+      [
+        "Chứng bằng ⇒ hiện tiền chứng",
+        "Chiều ngược",
+        "Tương nghịch",
+        "Đồng nghĩa"
+      ],
+      0,
+      "Theo SGK tr. 53–54.",
+      "bk"
+    ],
+    [
+      "Sự tướng Thường hằng đã học nên dùng tên nào?",
+      [
+        "Không gian vô vi",
+        "Hư không vô vi",
+        "Nhãn tri chấp trì cái bình",
+        "Sừng thỏ"
+      ],
+      0,
+      "Theo thống nhất thuật ngữ bài giảng.",
+      "bk"
+    ]
+  ],
+  "terms": [
+    [
+      "Giác tri",
+      "Tri thức có khả năng liễu tri; đồng nghĩa với Liễu tri, Tri thức.",
+      "giac-tri"
+    ],
+    [
+      "Liễu tri",
+      "Khả năng chấp trì cảnh.",
+      "giac-tri"
+    ],
+    [
+      "Tánh tướng",
+      "Dấu hiệu/định nghĩa của một pháp, là cơ sở để xác định đúng loại pháp.",
+      "giac-tri"
+    ],
+    [
+      "Sở tướng",
+      "Pháp được tánh tướng định nghĩa.",
+      "giac-tri"
+    ],
+    [
+      "Hiện tiền",
+      "Liễu tri ly phân biệt và không sai loạn.",
+      "hien-tien"
+    ],
+    [
+      "Hiện lượng",
+      "Hiện tiền đáp ứng thêm điều kiện mới mẻ, không nhầm lẫn.",
+      "hien-tien"
+    ],
+    [
+      "Căn hiện tiền",
+      "Hiện tiền sinh từ tăng thượng duyên bất cộng là hữu sắc căn.",
+      "can-hien"
+    ],
+    [
+      "Ý hiện tiền",
+      "Hiện tiền sinh từ tăng thượng duyên bất cộng là ý căn.",
+      "y-hien"
+    ],
+    [
+      "Tự chứng hiện tiền",
+      "Năng thủ hành tướng, ly phân biệt, không sai loạn.",
+      "tu-chung"
+    ],
+    [
+      "Du già hiện tiền",
+      "Trí của Thánh giả ly phân biệt, không sai loạn, phát sinh từ chánh quán song vận tam ma địa.",
+      "du-gia"
+    ],
+    [
+      "Tự hiện tiền",
+      "Một mục riêng, gồm 6 phân biệt và 1 vô phân biệt.",
+      "tu-hien"
+    ],
+    [
+      "Tỷ độ",
+      "Đam trước tri dựa chánh nhân, không nhầm lẫn sở lượng ẩn tế.",
+      "ty-do"
+    ],
+    [
+      "Tỷ lượng",
+      "Nhận thức suy luận mới mẻ, không nhầm lẫn dựa trên chánh nhân.",
+      "ty-do"
+    ],
+    [
+      "Tín hứa tỷ độ",
+      "Tỷ độ dựa tín hứa chánh nhân với sở lượng cực ẩn tế.",
+      "ty-ba"
+    ],
+    [
+      "Cực thành tỷ độ",
+      "Tỷ độ dựa cực thành chánh nhân; sự tướng “cái có con thỏ” gọi là “mặt trăng”.",
+      "ty-ba"
+    ],
+    [
+      "Sự thế tỷ độ",
+      "Tỷ độ dựa sự thế chánh nhân với sở lượng lược ẩn tế.",
+      "ty-ba"
+    ],
+    [
+      "Tái quyết tri",
+      "Liễu tri phi lượng chứng lại điều lượng trước đã chứng.",
+      "tai-quyet"
+    ],
+    [
+      "Tứ sát tri",
+      "Nhất ý đam trước pháp nhưng chưa thấu đạt quán sát nghĩa.",
+      "tu-sat"
+    ],
+    [
+      "Nghi",
+      "Liễu tri hoài nghi nhị biên bằng tự lực.",
+      "nghi"
+    ],
+    [
+      "Hiển nhi bất định",
+      "Cảnh trình hiện rõ nhưng không dẫn đến khẳng định.",
+      "hnbd"
+    ],
+    [
+      "Điên đảo tri",
+      "Liễu tri sai loạn đối với xúc nhập cảnh.",
+      "dien-dao"
+    ],
+    [
+      "Lượng",
+      "Liễu tri mới mẻ, không nhầm lẫn.",
+      "luong"
+    ],
+    [
+      "Tri thức phi lượng",
+      "Liễu tri không là mới mẻ và không nhầm lẫn.",
+      "luong"
+    ],
+    [
+      "Phân biệt",
+      "Đam trước tri chấp trì thích hợp trộn lẫn nghĩa tổng hay thanh tổng.",
+      "phan-biet"
+    ],
+    [
+      "Tri thức vô phân biệt",
+      "Liễu tri ly đam trước tri chấp trì thích hợp trộn lẫn nghĩa tổng hay thanh tổng.",
+      "phan-biet"
+    ],
+    [
+      "Nghĩa tổng",
+      "Đối cảnh khái niệm được tâm phân biệt sử dụng.",
+      "phan-biet"
+    ],
+    [
+      "Sai loạn tri",
+      "Liễu tri sai loạn đối với hiện cảnh.",
+      "sai-loan"
+    ],
+    [
+      "Vô sai loạn tri",
+      "Liễu tri không sai loạn đối với hiện cảnh.",
+      "sai-loan"
+    ],
+    [
+      "Ý tri",
+      "Liễu tri sinh từ tăng thượng duyên bất cộng là ý căn.",
+      "ytri"
+    ],
+    [
+      "Căn tri",
+      "Liễu tri sinh từ tăng thượng duyên bất cộng là hữu sắc căn.",
+      "ytri"
+    ],
+    [
+      "Khiển nhập giác",
+      "Liễu tri nhập tự cảnh bởi lực ký hiệu; đồng nghĩa Phân biệt.",
+      "khien-thanh"
+    ],
+    [
+      "Thành nhập giác",
+      "Liễu tri nhập tự cảnh bởi lực thực hữu; đồng nghĩa vô phân biệt.",
+      "khien-thanh"
+    ],
+    [
+      "Tâm",
+      "Tâm vương; đồng nghĩa Ý, Thức; có 6 tâm.",
+      "tam-tamso"
+    ],
+    [
+      "Tâm sở",
+      "Yếu tố tùy hành tương ứng với tâm.",
+      "tam-tamso"
+    ],
+    [
+      "Musum",
+      "Quan hệ ba khả năng, chỉ một chiều nhất thiết.",
+      "musum-mushi"
+    ],
+    [
+      "Mushi",
+      "Quan hệ bốn khả năng; cả hai chiều đều không nhất thiết.",
+      "musum-mushi"
+    ],
+    [
+      "Thường hằng",
+      "Sự tướng được dùng trong bài tập: không gian vô vi.",
+      "so-luong"
+    ],
+    [
+      "Sở duyên duyên",
+      "Duyên theo đối cảnh, ví dụ sắc với chấp sắc căn hiện tiền.",
+      "can-hien"
+    ],
+    [
+      "Tăng thượng duyên bất cộng",
+      "Nhân duyên trội riêng của loại tri thức, ví dụ nhãn căn với nhãn tri.",
+      "can-hien"
+    ],
+    [
+      "Sát-na",
+      "Đơn vị thời gian cực ngắn trong lý luận về sự sinh khởi và tính mới mẻ.",
+      "hien-tien"
+    ]
+  ],
+  "cases": [
+    {
+      "a": "Căn hiện tiền",
+      "b": "Căn tri",
+      "type": "musum",
+      "rule": "A ⇒ B; B ⇏ A",
+      "cells": [
+        null,
+        "Nhãn tri thấy một mặt trăng như hai mặt trăng (Căn tri điên đảo)",
+        "Nhãn tri chấp trì màu xanh (Căn hiện tiền và Căn tri)",
+        "Tỷ độ chứng âm thanh vô thường (Ý tri, không là Căn tri)"
+      ],
+      "explain": "Vì Căn hiện tiền sinh từ hữu sắc căn nên là Căn tri. Nhưng Căn tri có thể sai loạn nên không nhất thiết là Căn hiện tiền."
+    },
+    {
+      "a": "Ý hiện tiền",
+      "b": "Ý tri",
+      "type": "musum",
+      "rule": "A ⇒ B; B ⇏ A",
+      "cells": [
+        null,
+        "Phân biệt chấp trì cái bình (Ý tri không là Ý hiện tiền)",
+        "Ý hiện tiền chấp trì màu xanh (có cả hai điều kiện)",
+        "Nhãn tri chấp trì cái bình (Căn tri, không là Ý tri)"
+      ],
+      "explain": "Tánh tướng Ý hiện tiền có điều kiện ly phân biệt và không sai loạn mà Ý tri nói chung không bắt buộc."
+    },
+    {
+      "a": "Hiện lượng",
+      "b": "Hiện tiền",
+      "type": "musum",
+      "rule": "A ⇒ B; B ⇏ A",
+      "cells": [
+        null,
+        "Căn hiện tiền chấp trì màu xanh ở sát-na sau (không còn mới mẻ, khi đáp ứng điều kiện tái quyết)",
+        "Căn hiện lượng chấp trì màu xanh ở sát-na thứ nhất",
+        "Phân biệt chấp trì cái bình"
+      ],
+      "explain": "Hiện lượng là hiện tiền thêm điều kiện mới mẻ, không nhầm lẫn."
+    },
+    {
+      "a": "Ý",
+      "b": "Ý tri",
+      "type": "mushi",
+      "rule": "A ⇏ B; B ⇏ A",
+      "cells": [
+        "Nhãn thức (Ý nhưng không là Ý tri)",
+        "Cảm thọ tùy hành ý thức (Ý tri nhưng không là Ý)",
+        "Ý thức (vừa Ý vừa Ý tri)",
+        "Tâm sở tùy hành căn thức (không là Ý, không là Ý tri)"
+      ],
+      "explain": "Bốn biện đề này được SGK nêu ở trang 49."
+    },
+    {
+      "a": "Giác tri",
+      "b": "Tri thức",
+      "type": "dongnghia",
+      "rule": "A ⇔ B",
+      "cells": [
+        null,
+        null,
+        "Bất kỳ giác tri nào (ví dụ nhãn tri chấp trì cái bình)",
+        "Một pháp không là giác tri (ví dụ cái bình)"
+      ],
+      "explain": "SGK nêu Giác tri, Liễu tri và Tri thức đồng nghĩa."
+    },
+    {
+      "a": "Lượng",
+      "b": "Tái quyết tri",
+      "type": "tuongnghich",
+      "rule": "A ∩ B = ∅",
+      "cells": [
+        "Tỷ lượng chứng âm thanh vô thường ở sát-na đầu",
+        "Tỷ độ chứng lại âm thanh vô thường ở sát-na sau",
+        null,
+        "Cái bình (không là giác tri)"
+      ],
+      "explain": "Lượng mới mẻ; Tái quyết tri là phi lượng và chứng lại. Vì vậy không vừa là cả hai."
+    }
+  ]
+}</script>
+<script>
+(()=>{
+'use strict';
+const DATA=JSON.parse(document.getElementById('courseData').textContent);
+const U=DATA.units, L=DATA.lessons, Q=DATA.quiz, T=DATA.terms, C=DATA.cases;
+const byId=Object.fromEntries(L.map(x=>[x.id,x]));
+const get=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const plain=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+const storeKey='nalanda_tamloaihoc_2026_handbook_v1';
+let saved={done:[],notes:{},known:[],theme:'light'}; try{saved={...saved,...JSON.parse(localStorage.getItem(storeKey)||'{}')}}catch(e){}
+function persist(){try{localStorage.setItem(storeKey,JSON.stringify(saved))}catch(e){}}
+let route={view:'home'}, openUnits=new Set(['nen']), quizState=null, flashState={list:[],idx:0,flip:false,filter:'all'}, termFilter='', searchTerm='', filterUnit='all', visibleCase=0;
+const percent=()=>Math.round((saved.done.length/L.length)*100);
+const countUnit=id=>L.filter(x=>x.unit===id).length,doneUnit=id=>L.filter(x=>x.unit===id&&saved.done.includes(x.id)).length;
+const url=(view,id='')=>`#${view}${id?'/'+encodeURIComponent(id):''}`;
+
+/* ---------- icons & colours ---------- */
+const P={
+ home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
+ map:'<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M12 11.5 6.3 16.9M12 11.5l5.7 5.4"/>',
+ book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5V5.5M8.5 7.5h7M8.5 11h7"/>',
+ cards:'<rect x="3" y="7" width="13" height="14" rx="2.5"/><path d="M8 3.5h10.5A2.5 2.5 0 0 1 21 6v11"/>',
+ quiz:'<circle cx="12" cy="12" r="9"/><path d="m8 12.4 2.8 2.8L16.2 9.6"/>',
+ venn:'<circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/>',
+ pen:'<path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="m14.5 7.5 3 3"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+ moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ print:'<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/>',
+ menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',
+ x:'<path d="M6 6l12 12M18 6 6 18"/>',
+ toc:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+ chev:'<path d="m9 6 6 6-6 6"/>',
+ right:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+ left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+ up:'<path d="M7 17 17 7M8 7h9v9"/>',
+ check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+ bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.2 1.1 2V16h5v-.2c0-.8.4-1.5 1.1-2A6 6 0 0 0 12 3z"/>',
+ alert:'<path d="M10.3 4 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4M12 17h.01"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+ shuffle:'<path d="M3 6h3.5c2 0 3.2.9 4.3 2.4l2.4 3.2c1.1 1.5 2.3 2.4 4.3 2.4H21M3 18h3.5c2 0 3.2-.9 4.3-2.4M13.2 8.4C14.3 6.9 15.5 6 17.5 6H21M18 3l3 3-3 3M18 15l3 3-3 3"/>',
+ refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>',
+ download:'<path d="M12 3v12M7 10l5 5 5-5M4 20h16"/>',
+ upload:'<path d="M12 21V9M7 14l5-5 5 5M4 4h16"/>',
+ layers:'<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
+ flip:'<path d="M4 12a8 8 0 0 1 13.7-5.7L20 8.5M20 4v4.5h-4.5M20 12a8 8 0 0 1-13.7 5.7L4 15.5M4 20v-4.5h4.5"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+ sparkle:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
+ tag:'<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+ swap:'<path d="M4 8h15M15 4l4 4-4 4M20 16H5M9 12l-4 4 4 4"/>',
+ star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+};
+const ic=(n,cls='')=>`<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n]||''}</svg>`;
+const PAL=['mint','peach','sky','lav','butter','rose'];
+const uIdx=id=>Math.max(0,U.findIndex(u=>u.id===id));
+const uc=id=>'c-'+PAL[uIdx(id)%PAL.length];
+const unitOf=id=>U.find(u=>u.id===id)||U[0];
+const shortName=u=>u.name.replace(/^\d+\s*·\s*/,'');
+const unitNum=u=>(u.name.match(/^(\d+)/)||['',''])[1];
+const badge=(u,extra='')=>`<span class="u-badge ${uc(u.id)} ${extra}" aria-hidden="true">${esc(u.icon)}</span>`;
+const lotus=`<svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke-width="1.8" stroke-linejoin="round"><path d="M20 30c-4-4-5-10 0-18 5 8 4 14 0 18z" stroke="#2f7f6d" fill="#c9eadc"/><path d="M20 30c-6-1-11-6-11-12 5 0 9 4 11 12z" stroke="#4d8fc6" fill="#dbe9f8"/><path d="M20 30c6-1 11-6 11-12-5 0-9 4-11 12z" stroke="#e0855a" fill="#fbe0d0"/><path d="M9 31h22" stroke="#2f7f6d"/></g></svg>`;
+
+/* ---------- diagrams ---------- */
+const SEVEN=['hien-tien','ty-do','tai-quyet','tu-sat','hnbd','nghi','dien-dao'];
+const SEVEN_SHORT=['Hiện tiền','Tỷ độ','Tái quyết','Tứ sát','Hiển nhi','Nghi','Điên đảo'];
+const HEX=['#3c9a7f','#4d8fc6','#8473c4','#c3962f','#e0855a','#cc647a','#6f8f8b'];
+function heroSVG(){
+ const cx=180,cy=165,r=118;
+ const nodes=SEVEN.map((id,i)=>{const a=-Math.PI/2+i*2*Math.PI/7,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);
+  const lx=cx+(r+32)*Math.cos(a), ly=cy+(r+32)*Math.sin(a)+4, anchor=Math.abs(Math.cos(a))<.3?'middle':(Math.cos(a)>0?'start':'end');
+  return `<g class="orbit-node" data-lesson="${id}" role="button" tabindex="0" aria-label="${esc(SEVEN_SHORT[i])}"><title>${esc(byId[id]?.title||SEVEN_SHORT[i])}</title><line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${HEX[i]}" stroke-opacity=".25" stroke-width="1.5"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="19" fill="var(--paper)" stroke="${HEX[i]}" stroke-width="2.5"/><text x="${x.toFixed(1)}" y="${(y+5).toFixed(1)}" text-anchor="middle" font-family="Be Vietnam Pro,system-ui" font-size="14" font-weight="700" fill="${HEX[i]}">${i+1}</text><text x="${(anchor==='middle'?lx:anchor==='start'?x+24:x-24).toFixed(1)}" y="${(anchor==='middle'?ly:y+4.5).toFixed(1)}" text-anchor="${anchor}" font-family="Be Vietnam Pro,system-ui" font-size="14" font-weight="600" fill="currentColor">${SEVEN_SHORT[i]}</text></g>`}).join('');
+ return `<svg viewBox="-24 0 408 330" role="img" aria-label="Sơ đồ bảy loại Giác tri quanh trung tâm Giác tri" style="color:var(--ink)">
+ <circle cx="${cx}" cy="${cy}" r="150" fill="var(--paper)" fill-opacity=".5"/>
+ <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2f7f6d" stroke-opacity=".25" stroke-width="1.5" stroke-dasharray="3 6"/>
+ <circle cx="${cx}" cy="${cy}" r="72" fill="var(--paper)" fill-opacity=".8"/>
+ ${nodes}
+ <circle cx="${cx}" cy="${cy}" r="50" fill="#2f7f6d"/>
+ <circle cx="${cx}" cy="${cy}" r="50" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="6"/>
+ <g transform="translate(${cx-14},${cy-32}) scale(.7)" opacity=".95"><path d="M20 30c-4-4-5-10 0-18 5 8 4 14 0 18z" fill="#c9eadc"/><path d="M20 30c-6-1-11-6-11-12 5 0 9 4 11 12z" fill="#dbe9f8"/><path d="M20 30c6-1 11-6 11-12-5 0-9 4-11 12z" fill="#fbe0d0"/></g>
+ <text x="${cx}" y="${cy+17}" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="17" font-weight="600" fill="#fff">Giác tri</text>
+ </svg>`;
+}
+/* three-type illustrations */
+const ART={
+ general:`<svg viewBox="0 0 90 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M24 50c-9 0-15-6-15-13s6-12 13-12c2-8 9-13 17-13 9 0 16 6 17 14 8 0 14 6 14 12s-6 12-14 12z" fill="#fff" fill-opacity=".7"/><circle cx="40" cy="34" r="8" stroke-dasharray="3 4"/><rect x="51" y="27" width="11" height="11" rx="2" stroke-dasharray="3 4"/><circle cx="20" cy="60" r="3"/><circle cx="12" cy="66" r="2"/></svg>`,
+ clear:`<svg viewBox="0 0 90 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 35s12-18 30-18 30 18 30 18-12 18-30 18S6 35 6 35z" fill="#fff" fill-opacity=".7"/><circle cx="36" cy="35" r="8"/><circle cx="36" cy="35" r="3" fill="currentColor"/><path d="M68 35h6"/><rect x="74" y="27" width="12" height="16" rx="3" fill="currentColor" fill-opacity=".85"/></svg>`,
+ illusion:`<svg viewBox="0 0 90 70" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40s12-18 30-18 30 18 30 18-12 18-30 18S6 40 6 40z" fill="#fff" fill-opacity=".7"/><circle cx="36" cy="40" r="8"/><circle cx="36" cy="40" r="3" fill="currentColor"/><path d="M74 8a9 9 0 1 0 8 13 7 7 0 0 1-8-13z" fill="currentColor" fill-opacity=".85"/><path d="M62 15a9 9 0 1 0 8 13 7 7 0 0 1-8-13z" stroke-dasharray="3 3"/></svg>`
+};
+/* Venn diagram per relation */
+function venn(c){
+ const has=i=>!!c.cells[i];
+ const A='#3c9a7f',B='#4d8fc6';
+ const mark=(x,y,n,col)=>`<g><circle cx="${x}" cy="${y}" r="12" fill="${col}"/><text x="${x}" y="${y+4.5}" text-anchor="middle" font-family="Be Vietnam Pro,system-ui" font-size="12" font-weight="700" fill="#fff">${n}</text></g>`;
+ const lab=(x,y,t,col)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="18" font-weight="600" fill="${col}">${t}</text>`;
+ let body='';
+ if(c.type==='dongnghia'){
+  body=`<circle cx="160" cy="105" r="70" fill="${A}" fill-opacity=".18" stroke="${A}" stroke-width="2"/><circle cx="160" cy="105" r="70" fill="none" stroke="${B}" stroke-width="2" stroke-dasharray="6 5"/>${lab(160,96,'A = B','#2b6b5b')}${has(2)?mark(160,120,3,'#8473c4'):''}`;
+ }else if(c.type==='tuongnghich'){
+  body=`<circle cx="98" cy="105" r="56" fill="${A}" fill-opacity=".18" stroke="${A}" stroke-width="2"/><circle cx="222" cy="105" r="56" fill="${B}" fill-opacity=".18" stroke="${B}" stroke-width="2"/>${lab(98,92,'A',A)}${lab(222,92,'B',B)}${has(0)?mark(98,120,1,A):''}${has(1)?mark(222,120,2,B):''}<text x="160" y="110" text-anchor="middle" font-size="12" fill="#8a9a9b" font-family="Be Vietnam Pro,system-ui">∅</text>`;
+ }else if(c.type==='musum'){
+  const aInB=!has(0); // only-A empty => A ⊂ B
+  const big=aInB?{n:'B',c:B}:{n:'A',c:A}, small=aInB?{n:'A',c:A}:{n:'B',c:B};
+  body=`<circle cx="160" cy="105" r="80" fill="${big.c}" fill-opacity=".16" stroke="${big.c}" stroke-width="2"/><circle cx="185" cy="112" r="40" fill="${small.c}" fill-opacity=".28" stroke="${small.c}" stroke-width="2"/>${lab(110,82,big.n,big.c)}${lab(185,104,small.n,small.c)}${aInB?(has(1)?mark(118,128,2,B):''):(has(0)?mark(118,128,1,A):'')}${has(2)?mark(185,128,3,'#8473c4'):''}`;
+ }else{
+  body=`<circle cx="125" cy="105" r="66" fill="${A}" fill-opacity=".18" stroke="${A}" stroke-width="2"/><circle cx="195" cy="105" r="66" fill="${B}" fill-opacity=".18" stroke="${B}" stroke-width="2"/>${lab(100,82,'A',A)}${lab(220,82,'B',B)}${has(0)?mark(95,118,1,A):''}${has(2)?mark(160,108,3,'#8473c4'):''}${has(1)?mark(225,118,2,B):''}`;
+ }
+ return `<svg viewBox="0 0 320 210" role="img" aria-label="Biểu đồ Venn quan hệ ${esc(c.a)} và ${esc(c.b)}"><rect x="4" y="4" width="312" height="202" rx="18" fill="var(--bg)" stroke="var(--line2)" stroke-width="1.5" stroke-dasharray="5 5"/>${body}${has(3)?mark(290,184,4,'#8a9a9b'):''}</svg>`;
+}
+function ring(v,total){const p=total?v/total:0,R=60,Cc=2*Math.PI*R;return `<svg viewBox="0 0 150 150" role="img" aria-label="${v} trên ${total}"><circle cx="75" cy="75" r="${R}" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="75" cy="75" r="${R}" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${(Cc*p).toFixed(1)} ${Cc.toFixed(1)}" transform="rotate(-90 75 75)"/><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#3c9a7f"/><stop offset="1" stop-color="#4d8fc6"/></linearGradient></defs><text x="75" y="83" text-anchor="middle" font-family="Lora,Georgia,serif" font-size="30" font-weight="600" fill="var(--ink)">${v}/${total}</text></svg>`}
+const emptyArt=`<svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36" fill="var(--soft)"/><rect x="24" y="20" width="32" height="40" rx="5" fill="var(--paper)" stroke="var(--brand)" stroke-width="2"/><path d="M31 32h18M31 40h18M31 48h10" stroke="var(--line2)" stroke-width="3" stroke-linecap="round"/></svg>`;
+
+/* ---------- core ---------- */
+function toast(s){const el=get('#toast');el.textContent=s;el.classList.add('show');clearTimeout(window.__toastT);window.__toastT=setTimeout(()=>el.classList.remove('show'),2600)}
+function setRoute(view,id='',extra=''){route={view,id,extra};location.hash=url(view,id)+(extra?'?'+extra:'');render();get('#content').focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});closeSidebar()}
+function syncHash(){const h=decodeURIComponent(location.hash.slice(1)||'home');const [path,extra='']=h.split('?');const [view,id='']=path.split('/');route={view:view||'home',id,extra};closeSidebar();render()}
+function navItem(k,icon,title,count=''){return `<button class="s-link ${route.view===k?'active':''}" data-go="${k}"><span class="navico">${ic(icon)}</span><span>${title}</span>${count?`<span class="number">${count}</span>`:''}</button>`}
+function renderNav(){
+ get('#mainNav').innerHTML=[navItem('home','home','Tổng quan'),navItem('map','map','Sơ đồ kiến thức'),navItem('glossary','book','Từ điển thuật ngữ',T.length),navItem('flash','cards','Flashcards',T.length),navItem('quiz','quiz','Tự kiểm tra',Q.length),navItem('cases','venn','Luyện biện kinh'),navItem('notes','pen','Sổ ghi chú')].join('');
+ get('#unitsNav').innerHTML=U.map(u=>{const lessons=L.filter(x=>x.unit===u.id);const opening=openUnits.has(u.id)||route.view==='lesson'&&byId[route.id]?.unit===u.id;return `<div class="s-unit"><button class="unit-toggle ${opening?'open':''}" data-toggle="${u.id}" aria-expanded="${opening}">${badge(u)}<span>${esc(u.name)}</span>${ic('chev','chev')}</button><div class="unit-sub ${opening?'open':''}">${lessons.map(x=>`<button class="unit-item ${route.id===x.id&&route.view==='lesson'?'selected':''}" data-lesson="${x.id}"><span class="mini-check ${saved.done.includes(x.id)?'done':''}"></span><span>${esc(x.title)}</span></button>`).join('')}</div></div>`}).join('');
+ const bn=[['home','home','Tổng quan'],['map','map','Sơ đồ'],['flash','cards','Thẻ nhớ'],['quiz','quiz','Kiểm tra']];
+ get('#bottomNav').innerHTML=bn.map(b=>`<button data-go="${b[0]}" class="${route.view===b[0]?'active':''}">${ic(b[1])}<span>${b[2]}</span></button>`).join('')+`<button data-action="openToc">${ic('toc')}<span>Mục lục</span></button>`;
+}
+function render(){renderNav();const labels={home:'Tổng quan',lesson:byId[route.id]?.title||'Bài học',map:'Sơ đồ kiến thức',glossary:'Từ điển',search:'Tìm kiếm',flash:'Flashcards',quiz:'Tự kiểm tra',cases:'Luyện biện kinh',notes:'Sổ ghi chú',unit:'Chủ đề'};get('#breadcrumbTop').innerHTML='Nalanda / <b>'+esc(labels[route.view]||'Tâm loại học')+'</b>';const f={home:renderHome,lesson:renderLesson,map:renderMap,glossary:renderGlossary,search:renderSearch,flash:renderFlash,quiz:renderQuiz,cases:renderCases,notes:renderNotes,unit:renderUnit};get('#content').innerHTML=(f[route.view]||renderHome)();attachLocal()}
+
+/* ---------- views ---------- */
+const card=u=>{const n=countUnit(u.id),d=doneUnit(u.id);return `<button class="unit-card ${uc(u.id)}" data-unit="${u.id}"><div class="top">${badge(u)}<div><div class="num">CHỦ ĐỀ ${unitNum(u)}</div><h3>${esc(shortName(u))}</h3></div></div><p>${esc(u.description)}</p><div class="mini-bar"><i style="width:${n?d/n*100:0}%"></i></div><footer><span>${n} bài học</span><span>${d}/${n} đã học</span></footer></button>`};
+function renderHome(){
+ const next=L.find(x=>!saved.done.includes(x.id))||L[0];
+ const steps=[['target','Nắm tánh tướng','Định nghĩa chuẩn của từng loại','c-mint'],['layers','Nhớ phân loại','Trục 7 · 3 · 2 loại','c-sky'],['tag','Phân tích sự tướng','Đưa ví dụ đúng loại','c-lav'],['swap','Xét chiều nhất thiết','“Nếu là… thì nhất thiết…”','c-butter'],['venn','Thử biện kinh','Musum · mushi · bốn ô','c-peach']];
+ return `<section class="hero"><div class="hero-text"><div class="eyebrow">${ic('sparkle')} Sổ tay tương tác · Nalanda 2026</div><h1>Tâm loại học<br><em>Kiến lập</em> trí nhận thức</h1><p>Một hành trình có cấu trúc từ tánh tướng Giác tri, bảy loại tâm thức, đến các phép phân loại và biện kinh. Học từng bài, đối chiếu thuật ngữ, luyện sự tướng và ghi chú ngay trong sổ tay.</p><div class="hero-actions"><button class="btn primary" data-lesson="${next.id}">${saved.done.length?'Tiếp tục học':'Bắt đầu học'} ${ic('right')}</button><button class="btn" data-go="map">${ic('map')} Xem sơ đồ môn học</button></div></div><div class="hero-art">${heroSVG()}<div class="cap">Bảy loại Giác tri · chạm vào một nút để mở bài</div></div></section>
+ <div class="stats"><div class="stat c-mint"><span class="ic">${ic('book')}</span><div><div class="num">${L.length}</div><div class="lab">Bài học chủ đề</div></div></div><div class="stat c-sky"><span class="ic">${ic('layers')}</span><div><div class="num">${U.length}</div><div class="lab">Cụm kiến thức</div></div></div><div class="stat c-lav"><span class="ic">${ic('quiz')}</span><div><div class="num">${Q.length}</div><div class="lab">Câu tự kiểm tra</div></div></div><div class="stat c-peach"><span class="ic">${ic('star')}</span><div><div class="num">${percent()}%</div><div class="lab">Tiến độ học</div></div></div></div>
+ <div class="section-head"><div><h2>Lộ trình học 5 bước</h2><p>Cách tiếp cận mỗi bài theo gợi ý của giáo trình.</p></div></div>
+ <div class="path">${steps.map((s,i)=>`<div class="step ${s[3]}"><div class="dot">${ic(s[0])}</div><span class="n">${i+1}</span><div><b>${s[1]}</b><span>${s[2]}</span></div></div>`).join('')}</div>
+ <div class="section-head"><div><h2>Chương trình học</h2><p>Đi theo logic của SGK: tánh tướng → phân loại → vận dụng.</p></div><button class="inline-link" data-go="map">Sơ đồ tổng thể ${ic('up')}</button></div>
+ <div class="units-grid">${U.map(card).join('')}</div>
+ <div class="card course-progress"><div class="grow"><div class="between"><span><strong>Tiến độ cá nhân</strong> · ${saved.done.length}/${L.length} bài đã đánh dấu</span><span>${percent()}%</span></div><div class="progress-bg"><div class="progress-fg" style="width:${percent()}%"></div></div></div><button class="btn tiny" data-lesson="${next.id}">Bài tiếp theo ${ic('right')}</button></div>
+ <div class="source-note">${ic('info')}<div><strong>Về nguồn nội dung:</strong> sổ tay tổ chức lại kiến thức từ <em>Kiến lập Tâm loại học</em> (Geshe Jampal Samphel, bản Nalanda hiệu đính 2026, 57 trang), đối chiếu bài giảng hiện có. Các tánh tướng được đánh dấu riêng; phần diễn giải, sơ đồ, câu hỏi và ví dụ luyện tập là biên tập hỗ trợ học. Những phần sau tr. 22 là nội dung của toàn giáo trình, không mặc nhiên là bài chị đã học trên lớp.</div></div>`}
+function resultCard(x,meta){const u=unitOf(x.unit);return `<button class="search-result" data-lesson="${x.id}">${badge(u)}<div><div class="smallmeta">${meta}</div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p></div><span class="go">${ic('chev')}</span></button>`}
+function renderUnit(){const u=U.find(x=>x.id===route.id)||U[0],items=L.filter(x=>x.unit===u.id);const list=items.filter(x=>filterUnit==='all'||(filterUnit==='read'?saved.done.includes(x.id):!saved.done.includes(x.id)));return `<div class="crumb"><button data-go="home">Sổ tay</button>${ic('chev')}<span>Chủ đề ${unitNum(u)}</span></div><div class="article-head-row">${badge(u)}<div><div class="eyebrow">Chủ đề học</div><h1 class="page-title">${esc(shortName(u))}</h1><p class="lede">${esc(u.description)} · ${items.length} bài học.</p></div></div><div class="filters"><button class="filter ${filterUnit==='all'?'selected':''}" data-unit-filter="all">Tất cả</button><button class="filter ${filterUnit==='unread'?'selected':''}" data-unit-filter="unread">Chưa học</button><button class="filter ${filterUnit==='read'?'selected':''}" data-unit-filter="read">Đã học</button></div>${list.map(x=>resultCard(x,`Trang ${esc(x.pages)} · ${saved.done.includes(x.id)?'<span style="color:var(--brand)">✓ Đã học</span>':'Chưa đánh dấu'}`)).join('')||`<div class="empty">${emptyArt}Không có bài tương ứng bộ lọc.</div>`}`}
+function renderLesson(){
+ const x=byId[route.id];if(!x)return renderHome();const u=unitOf(x.unit),i=L.indexOf(x),col=uc(u.id),done=saved.done.includes(x.id);let n=0;const H=t=>`<h2><span class="h-num">${++n}</span>${t}</h2>`;
+ const siblings=L.filter(z=>z.unit===x.unit);
+ return `<div class="article"><div class="article-header"><div class="crumb"><button data-go="home">Sổ tay</button>${ic('chev')}<button data-unit="${u.id}">${esc(u.name)}</button>${ic('chev')}<span>Bài ${i+1}/${L.length}</span></div>
+ <div class="article-head-row">${badge(u)}<div style="min-width:0"><div class="eyebrow">${esc(shortName(u))} · ${esc(x.level)}</div><h1 class="page-title">${esc(x.title)}</h1><p class="lede">${esc(x.desc)}</p></div></div>
+ <div class="article-meta"><span class="pill">${ic('book')} SGK tr. ${esc(x.pages)}</span><span class="pill gold">${x.points.length} ý chính</span><span class="pill ${done?'done':''}">${done?'✓ Đã học':'○ Chưa đánh dấu'}</span></div></div>
+ <div class="two-pane"><div>
+ ${x.definition?`<section>${H('Tánh tướng / định nghĩa')}<div class="definition"><span class="qm">“</span><div class="eyebrow">Định nghĩa cốt lõi</div><blockquote>${esc(x.definition)}</blockquote><div class="caption">Theo trích yếu và cách diễn đạt trong SGK Tâm loại học 2026 · trang ${esc(x.pages)}</div></div></section>`:''}
+ <section>${H('Trọng tâm kiến thức')}<ol class="timeline ${col}">${x.points.map((p,j)=>`<li><span class="node">${String(j+1).padStart(2,'0')}</span><div class="box"><h3>${esc(p[0])}</h3><p>${esc(p[1])}</p></div></li>`).join('')}</ol></section>
+ ${x.examples.length?`<section>${H('Sự tướng / ví dụ')}<div class="tip-card ok"><span class="ti">${ic('bulb')}</span><div><div class="eyebrow">Vận dụng</div><ul>${x.examples.map(s=>`<li>${esc(s)}</li>`).join('')}</ul></div></div></section>`:''}
+ ${x.watch.length?`<section>${H('Điểm cần phân biệt')}<div class="tip-card danger"><span class="ti">${ic('alert')}</span><div><div class="eyebrow">Dễ nhầm</div><ul>${x.watch.map(s=>`<li>${esc(s)}</li>`).join('')}</ul></div></div></section>`:''}
+ <section class="note-area">${H('Ghi chú của chị')}<div class="notelab"><span>Ghi theo cách hiểu sau khi học / nghe Thầy/Cô giải thích.</span><span id="noteStatus">${ic('check')} Lưu tự động trên thiết bị</span></div><textarea id="lessonNote" data-notekey="${x.id}" placeholder="Ghi định nghĩa, sự tướng, câu LG: / ĐLG: hoặc thắc mắc cần hỏi Thầy/Cô...">${esc(saved.notes[x.id]||'')}</textarea></section>
+ <div class="article-bottom"><div class="grp"><button class="btn ${done?'success':'primary'}" data-complete="${x.id}">${ic('check')} ${done?'Đã học · Bỏ đánh dấu':'Đánh dấu đã học'}</button><button class="btn" data-go="quiz">${ic('quiz')} Tự kiểm tra</button></div><div class="grp">${i>0?`<button class="btn" data-lesson="${L[i-1].id}">${ic('left')} Bài trước</button>`:''}${i<L.length-1?`<button class="btn" data-lesson="${L[i+1].id}">Bài tiếp ${ic('right')}</button>`:''}</div></div></div>
+ <aside class="sidepanel"><div class="sidebox"><h3>Vị trí trong chủ đề</h3><ol class="mini-path">${siblings.map(z=>`<li><button class="${z.id===x.id?'cur':''} ${saved.done.includes(z.id)?'done':''}" data-lesson="${z.id}"><span class="d">${saved.done.includes(z.id)?ic('check'):''}</span><span>${esc(z.title)}</span></button></li>`).join('')}</ol></div><div class="sidebox"><h3>Thông tin bài học</h3><div class="info-rows"><div><span>Nguồn</span><b>SGK 2026</b></div><div><span>Trang</span><b>${esc(x.pages)}</b></div><div><span>Chủ đề</span><b>${unitNum(u)}</b></div><div><span>Độ sâu</span><b>${esc(x.level)}</b></div></div></div><div class="sidebox"><h3>Mẹo ôn tập</h3><p>Hãy thử nói tánh tướng bằng trí nhớ, đưa một sự tướng đúng loại, rồi xác định chiều “nếu là… thì nhất thiết…”.</p><button class="btn tiny" data-go="flash">${ic('cards')} Luyện thẻ nhớ</button></div></aside></div></div>`}
+function renderMap(){
+ const pairs=[['Lượng','Tri thức phi lượng'],['Phân biệt','Vô phân biệt'],['Sai loạn tri','Vô sai loạn tri'],['Ý tri','Căn tri'],['Khiển nhập giác','Thành nhập giác'],['Tâm','Tâm sở']];
+ const pairIds=['luong','phan-biet','sai-loan','ytri','khien-thanh','tam-tamso'], axes=['Theo tính mới mẻ','Theo cách chấp trì cảnh','Theo hiện cảnh','Theo tăng thượng duyên','Theo cách nhập cảnh','Theo cấu trúc tâm'];
+ const three=[['Phân biệt','Lấy nghĩa tổng làm sở thủ cảnh','phan-biet','general','c-lav'],['Vô sai loạn, vô phân biệt','Lấy tự tướng làm sở thủ cảnh; đồng nghĩa Hiện tiền','hien-tien','clear','c-mint'],['Sai loạn, vô phân biệt','Lấy hữu vô minh hiện làm sở thủ cảnh','dien-dao','illusion','c-rose']];
+ const arrows=`<svg viewBox="0 0 30 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h22M22 3l4 4-4 4M26 13H4M8 9l-4 4 4 4"/></svg>`;
+ return `<div class="eyebrow">Bản đồ tư duy tương tác</div><h1 class="page-title">Sơ đồ kiến thức</h1><p class="lede">Toàn môn được kiến lập theo ba lối phân loại Giác tri. Chạm vào nhánh để đến bài học chi tiết.</p>
+ <div class="tree"><div class="tree-root"><strong>Giác tri</strong><small>Liễu tri · Tri thức · Khả năng chấp trì cảnh</small></div><div class="tree-stem"></div>
+ <div class="tree-three"><button class="tree-branch c-mint" data-lesson="bay-loai"><span class="bn">7</span><b>Bảy loại Giác tri</b><small>Hiện tiền → Tỷ độ → Tái quyết → Tứ sát → Hiển nhi → Nghi → Điên đảo</small></button><button class="tree-branch c-sky" data-lesson="ba-nhom"><span class="bn">3</span><b>Ba loại Giác tri</b><small>Phân biệt · Vô sai loạn vô phân biệt · Sai loạn vô phân biệt</small></button><button class="tree-branch c-peach" data-lesson="sau-cap"><span class="bn">2</span><b>Phân loại theo cặp</b><small>Sáu góc nhìn: Lượng, phân biệt, sai loạn, ý/căn, nhập cảnh, tâm/tâm sở</small></button></div></div>
+ <div class="section-head"><div><h2>Nhánh 1 · Bảy loại Giác tri</h2><p>Thứ tự trình bày theo SGK.</p></div></div>
+ <div class="seven">${SEVEN.map((id,i)=>{const x=byId[id];return `<button class="seven-card ${'c-'+['mint','sky','lav','butter','peach','rose','mint'][i]}" data-lesson="${id}"><span class="sn">${i+1}</span><div><b>${esc(x.title.replace(/ —.*/,''))}</b><small>${esc(x.desc)}</small></div></button>`}).join('')}</div>
+ <div class="section-head"><div><h2>Nhánh 2 · Ba loại Giác tri</h2><p>Phân theo sở thủ cảnh — đối tượng mà tâm trực tiếp nắm lấy.</p></div></div>
+ <div class="three">${three.map(q=>`<button class="three-card ${q[4]}" data-lesson="${q[2]}"><div class="art">${ART[q[3]]}</div><h3>${q[0]}</h3><p>${q[1]}</p></button>`).join('')}</div>
+ <div class="section-head"><div><h2>Nhánh 3 · Sáu cặp phân loại</h2><p>Mỗi cặp là một trục nhìn khác nhau trên cùng một tâm thức.</p></div></div>
+ <div class="pairs">${pairs.map((p,i)=>`<button class="pair-card ${'c-'+PAL[i%6]}" data-lesson="${pairIds[i]}"><h3><i>${i+1}</i>${axes[i]}</h3><div class="pair"><span>${p[0]}</span>${arrows}<span>${p[1]}</span></div></button>`).join('')}</div>
+ <div class="source-note">${ic('info')}<div>Sơ đồ phản ánh <em>các cách phân loại</em> chứ không phải một cây loại trừ hoàn toàn. Một tâm thức có thể đồng thời thuộc nhiều nhãn của các trục khác nhau (ví dụ Tỷ lượng vừa là Lượng vừa là Phân biệt).</div></div>`}
+const termCard=(t,foot=true)=>{const u=unitOf(byId[t[2]]?.unit);return `<button class="term-card ${uc(u.id)}" data-lesson="${t[2]}"><span class="av">${esc(t[0].charAt(0))}</span><div><h3>${esc(t[0])}</h3><p>${esc(t[1])}</p>${foot?`<footer>Mở bài học ${ic('up')}</footer>`:''}</div></button>`};
+function renderGlossary(){const ts=T.filter(t=>plain(t[0]+' '+t[1]).includes(plain(termFilter)));return `<div class="eyebrow">Kho thuật ngữ</div><h1 class="page-title">Từ điển Tâm loại học</h1><p class="lede">${T.length} khái niệm cốt lõi, liên kết trực tiếp tới bài học. Nội dung là tóm tắt tra cứu, hãy mở bài học để xem tánh tướng đầy đủ.</p><label class="searchbar" style="margin:22px 0 12px;width:100%;max-width:620px;height:46px">${ic('search')}<input id="termSearch" placeholder="Tìm: hiện tiền, musum, nghĩa tổng…" value="${esc(termFilter)}"></label><div class="smallmeta" style="margin-bottom:14px">${ts.length} thuật ngữ phù hợp</div><div class="glossary">${ts.map(t=>termCard(t)).join('')}</div>${ts.length?'':`<div class="empty">${emptyArt}Không tìm thấy thuật ngữ. Thử cụm từ khác.</div>`}`}
+function renderSearch(){const q=searchTerm.trim();const results=!q?[]:L.map(x=>({...x,search:[x.title,x.desc,x.definition,...x.points.flat(),...x.examples,...x.watch].join(' ')})).filter(x=>plain(x.search).includes(plain(q)));const matches=q?T.filter(t=>plain(t[0]+' '+t[1]).includes(plain(q))):[];return `<div class="eyebrow">Tìm kiếm toàn sổ tay</div><h1 class="page-title">Kết quả tra cứu</h1><p class="lede">${q?`Từ khóa: “${esc(q)}” · ${results.length} bài học · ${matches.length} thuật ngữ.`:'Nhập từ khóa ở ô tìm kiếm để tra trong toàn bộ bài học và từ điển.'}</p><div style="margin-top:22px">${results.map(x=>resultCard(x,`${esc(unitOf(x.unit).name)} · tr. ${esc(x.pages)}`)).join('')}${matches.length?`<div class="section-head"><h2>Thuật ngữ liên quan</h2></div><div class="glossary">${matches.map(t=>termCard(t,false)).join('')}</div>`:''}${!results.length&&!matches.length?`<div class="empty">${emptyArt}Chưa có kết quả. Thử tên khái niệm khác hoặc gõ không dấu.</div>`:''}</div>`}
+function initFlash(){const list=T.filter(t=>flashState.filter==='all'||byId[t[2]]?.unit===flashState.filter);if(flashState.list.length!==list.length)flashState.list=list.map((_,i)=>i);if(flashState.idx>=list.length)flashState.idx=0}
+function renderFlash(){initFlash();const subset=T.filter(t=>flashState.filter==='all'||byId[t[2]]?.unit===flashState.filter),t=subset[flashState.list[flashState.idx]],known=t&&saved.known.includes(t[0]);
+ const dots=subset.length<=60?`<div class="dots" aria-hidden="true">${flashState.list.map((k,i)=>`<i class="${i===flashState.idx?'cur':''} ${saved.known.includes(subset[k]?.[0])?'k':''}"></i>`).join('')}</div>`:'';
+ return `<div class="eyebrow">Ôn tập chủ động</div><h1 class="page-title">Flashcards</h1><p class="lede">Nhìn thuật ngữ → tự nói tánh tướng → lật thẻ để đối chiếu. Đánh dấu “Đã thuộc” để theo dõi tiến độ từ vựng.</p><div class="toolbar"><select id="flashFilter" class="select" aria-label="Chọn chủ đề"><option value="all">Tất cả chủ đề</option>${U.map(x=>`<option value="${x.id}" ${flashState.filter===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select><button class="btn tiny" data-action="shuffleFlash">${ic('shuffle')} Trộn thẻ</button><span class="pill">${saved.known.length}/${T.length} đã thuộc</span></div>${t?`<div class="flash-frame"><div class="flashcard ${flashState.flip?'flipped':''}" id="flashcard" tabindex="0" role="button" aria-label="Lật thẻ"><div class="flash-inner"><div class="flash-face flash-front"><span class="top">Thuật ngữ ${flashState.idx+1}/${subset.length}</span><p class="big">${esc(t[0])}</p><span class="bottom">${ic('flip')} Chạm vào thẻ để xem định nghĩa</span></div><div class="flash-face flash-back"><span class="top">Định nghĩa / gợi nhớ</span><p class="big">${esc(t[0])}</p><p class="sub">${esc(t[1])}</p><span class="bottom">${ic('flip')} Chạm để trở lại mặt trước</span></div></div></div><div class="flash-controls"><button class="btn" data-action="prevFlash">${ic('left')} Thẻ trước</button><button class="btn mid ${known?'success':'primary'}" data-action="knownFlash">${ic('check')} ${known?'Đã thuộc':'Đánh dấu thuộc'}</button><button class="btn" data-action="nextFlash">Thẻ tiếp ${ic('right')}</button></div>${dots}<p class="flash-progress">Thẻ ${flashState.idx+1} / ${subset.length} · <button class="inline-link" data-lesson="${t[2]}">Xem bài học của thẻ ${ic('up')}</button></p></div>`:`<div class="empty">${emptyArt}Chủ đề chưa có flashcards.</div>`}`}
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function newQuiz(u='all'){const pool=Q.map((q,i)=>({q,i})).filter(x=>u==='all'||x.q[4]===u);const picked=shuffled(pool).slice(0,Math.min(12,pool.length));quizState={filter:u,idx:0,score:0,answers:[],qs:picked.map(x=>{const q=x.q;const opts=shuffled(q[1].map((txt,i)=>({txt,correct:i===q[2]})));return {title:q[0],opts,explain:q[3],unit:q[4]}})}}
+function renderQuiz(){if(!quizState)newQuiz('all');const s=quizState,q=s.qs[s.idx],a=s.answers[s.idx];
+ const filterBar=`<div class="toolbar"><select class="select" id="quizFilter" aria-label="Chọn phạm vi"><option value="all">Toàn bộ chương trình</option>${U.map(x=>`<option value="${x.id}" ${s.filter===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select><button class="btn tiny" data-action="newQuiz">${ic('refresh')} Bộ câu hỏi mới</button></div>`;
+ const seg=`<div class="seg" aria-hidden="true">${s.qs.map((qq,i)=>{const ans=s.answers[i];return `<i class="${ans!==undefined?(qq.opts[ans].correct?'ok':'bad'):(i===s.idx?'cur':'')}"></i>`}).join('')}</div>`;
+ let body='';
+ if(!s.qs.length){body=`<div class="empty">${emptyArt}Chủ đề này chưa có câu hỏi. Hãy chọn phạm vi khác.</div>`}
+ else if(!q){body=`<div class="final-score"><div class="eyebrow">Hoàn thành bài kiểm tra</div>${ring(s.score,s.qs.length)}<p>${s.score===s.qs.length?'Rất tốt! Chị đã trả lời chính xác toàn bộ.':'Hãy ôn lại các khái niệm chưa chắc và thử một bộ câu hỏi mới.'}</p><button class="btn primary" data-action="newQuiz">Làm bộ tiếp theo ${ic('right')}</button></div>`}
+ else{const ok=a!==undefined&&q.opts[a].correct;body=`<div class="quiz-top"><span>Câu <b>${s.idx+1}</b>/${s.qs.length}</span><span><b>${s.score}</b> câu đúng</span></div>${seg}<div class="quiz-question"><div class="eyebrow">Câu hỏi trắc nghiệm</div><h2>${esc(q.title)}</h2><div class="answers">${q.opts.map((opt,i)=>`<button class="answer ${a!==undefined?(opt.correct?'correct':a===i?'wrong':''):''}" data-answer="${i}" ${a!==undefined?'disabled':''}><span class="letter">${a!==undefined&&opt.correct?'✓':a===i&&!opt.correct?'✕':'ABCD'[i]}</span><span>${esc(opt.txt)}</span></button>`).join('')}</div>${a!==undefined?`<div class="explain ${ok?'ok':'bad'}"><strong>${ok?'✓ Chính xác!':'✕ Chưa chính xác.'}</strong><br>${esc(q.explain)}</div>`:''}<div class="quiz-footer"><span class="smallmeta">${a===undefined?'Chọn một đáp án':'Đọc giải thích trước khi sang câu tiếp'}</span><button class="btn primary" data-action="nextQuiz" ${a===undefined?'disabled':''}>${s.idx===s.qs.length-1?'Xem kết quả':'Câu tiếp'} ${ic('right')}</button></div></div>`}
+ return `<div class="eyebrow">Tự đánh giá kiến thức</div><h1 class="page-title">Kiểm tra &amp; củng cố</h1><p class="lede">Mỗi lượt tối đa 12 câu, đảo thứ tự đáp án, giải thích ngay sau khi trả lời. Chọn chương muốn luyện hoặc toàn bộ chương trình.</p>${filterBar}<div class="quiz-panel">${body}</div>`}
+function renderCases(){const c=C[visibleCase]||C[0];const names=['Chỉ A','Chỉ B','Vừa A vừa B','Không A, không B'],cols=['c-mint','c-sky','c-lav','c-gray'];const applicable=c.type==='mushi'?'Mushi · bốn khả năng':c.type==='musum'?'Musum · ba khả năng':c.type==='dongnghia'?'Đồng nghĩa':'Tương nghịch';
+ return `<div class="eyebrow">Luyện tư duy luận lý</div><h1 class="page-title">Bàn biện kinh 4 khả năng</h1><p class="lede">Chọn một cặp khái niệm. Xem chiều nhất thiết, bốn ô sự tướng và lý do phân loại. Các minh họa được tổng hợp từ SGK và bài giảng.</p>
+ <div class="toolbar"><select id="caseSelect" class="select" aria-label="Cặp khái niệm">${C.map((cc,i)=>`<option value="${i}" ${visibleCase===i?'selected':''}>${esc(cc.a+' / '+cc.b)}</option>`).join('')}</select><span class="pill gold">${applicable}</span></div>
+ <div class="case-grid"><div class="card venn-card">${venn(c)}<div class="legend"><div><i style="background:#3c9a7f"></i><span><b>A</b> = ${esc(c.a)}</span></div><div><i style="background:#4d8fc6"></i><span><b>B</b> = ${esc(c.b)}</span></div><div><i style="background:#8a9a9b"></i><span>Khung ngoài = không A, không B</span></div></div></div>
+ <div><div class="case-rule"><div class="ab"><span class="a">${esc(c.a)}</span><span style="color:var(--faint)">↔</span><span class="b">${esc(c.b)}</span></div><div class="smallmeta">Quan hệ logic: <code>${esc(c.rule)}</code></div></div>
+ <div class="caseboard">${names.map((s,i)=>`<div class="casecell ${cols[i]} ${c.cells[i]?'':'impossible'}"><div class="label"><i>${i+1}</i>${s}</div><p>${c.cells[i]?esc(c.cells[i]):'Không có sự tướng hợp lệ trong quan hệ này.'}</p></div>`).join('')}</div>
+ <div class="case-explain"><b>Tại sao kết luận như vậy?</b><br>${esc(c.explain)}</div></div></div>
+ <div class="section-head"><h2>Đọc bốn ô như thế nào?</h2></div><div class="how"><div class="card c-mint"><div class="hi">A⇒B</div><h3>Hướng A ⇒ B</h3><p>Nếu chỉ-A có sự tướng, chiều A ⇒ B không nhất thiết. Nếu không có chỉ-A, xét chiều nhất thiết bằng tánh tướng.</p></div><div class="card c-sky"><div class="hi">B⇒A</div><h3>Hướng B ⇒ A</h3><p>Nếu chỉ-B có sự tướng, chiều B ⇒ A không nhất thiết.</p></div><div class="card c-lav"><div class="hi">∩</div><h3>Giao nhau / ngoài cả hai</h3><p>Để xác định mushi, cần bốn sự tướng. Musum cần ba trường hợp; tương nghịch không có trường hợp vừa cả hai.</p></div></div>
+ <div class="source-note">${ic('info')}<div>Bàn này giúp ôn cấu trúc suy luận, <strong>không phải bản đối thoại LG: / ĐLG:</strong> nguyên văn. Khi soạn biện kinh nộp lớp, cần dựng đầy đủ câu ứng thành và lý do theo cách Thầy/Cô hướng dẫn.</div></div>`}
+function renderNotes(){const entries=L.filter(x=>(saved.notes[x.id]||'').trim());return `<div class="eyebrow">Notebook · lưu trên thiết bị</div><h1 class="page-title">Ghi chú cá nhân</h1><p class="lede">Các ghi chú trong từng bài được tổng hợp tại đây. Có thể xuất một file JSON để sao lưu và nhập lại khi chuyển trình duyệt hoặc máy tính.</p><div class="toolbar"><button class="btn primary" data-action="exportNotes">${ic('download')} Xuất tiến độ + ghi chú</button><button class="btn" data-action="importNotes">${ic('upload')} Nhập bản sao lưu</button><button class="btn ghost" data-action="resetProgress">Đặt lại tiến độ</button></div>
+ <div class="stats" style="margin-top:22px"><div class="stat c-mint"><span class="ic">${ic('check')}</span><div><div class="num">${saved.done.length}</div><div class="lab">Bài đã học</div></div></div><div class="stat c-sky"><span class="ic">${ic('pen')}</span><div><div class="num">${entries.length}</div><div class="lab">Bài có ghi chú</div></div></div><div class="stat c-lav"><span class="ic">${ic('cards')}</span><div><div class="num">${saved.known.length}</div><div class="lab">Thuật ngữ đã thuộc</div></div></div><div class="stat c-peach"><span class="ic">${ic('star')}</span><div><div class="num">${percent()}%</div><div class="lab">Tiến độ</div></div></div></div>
+ <div class="section-head"><h2>Nhật ký kiến thức</h2></div><div class="notebook-list">${entries.map(x=>`<div class="card notebook-item ${uc(x.unit)}"><div class="smallmeta">${esc(unitOf(x.unit).name)}</div><h3>${esc(x.title)}</h3><p>${esc(saved.notes[x.id])}</p><button class="inline-link" data-lesson="${x.id}">Mở bài học để chỉnh sửa ${ic('up')}</button></div>`).join('')||`<div class="empty">${emptyArt}Chưa có ghi chú. Mở một bài học, nhập nội dung vào mục “Ghi chú của chị”.</div>`}</div><div class="source-note">${ic('info')}<div>Dữ liệu được lưu bằng bộ nhớ cục bộ của trình duyệt trên thiết bị này, không gửi đi đâu. Với file HTML mở theo giao thức file://, một số trình duyệt có thể xóa dữ liệu khi dọn lịch sử — hãy xuất bản sao lưu định kỳ.</div></div>`}
+
+/* ---------- events ---------- */
+function attachLocal(){
+ get('#termSearch')?.addEventListener('input',e=>{const p=e.target.selectionStart;termFilter=e.target.value;render();const input=get('#termSearch');input?.focus();input?.setSelectionRange(p,p)});
+ get('#lessonNote')?.addEventListener('input',e=>{saved.notes[e.target.dataset.notekey]=e.target.value;persist();const st=get('#noteStatus');if(st)st.innerHTML=ic('check')+' Đã lưu cục bộ'});
+ get('#flashcard')?.addEventListener('click',()=>flipFlash());
+ get('#flashcard')?.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flipFlash()}});
+ get('#flashFilter')?.addEventListener('change',e=>{flashState={...flashState,filter:e.target.value,idx:0,flip:false,list:[]};render()});
+ get('#quizFilter')?.addEventListener('change',e=>{newQuiz(e.target.value);render()});
+ get('#caseSelect')?.addEventListener('change',e=>{visibleCase=Number(e.target.value);render()});
+}
+function flipFlash(){flashState.flip=!flashState.flip;get('#flashcard')?.classList.toggle('flipped',flashState.flip)}
+function download(name,content,mime){const blob=new Blob([content],{type:mime}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2500)}
+function action(name){
+ if(name==='nextFlash'||name==='prevFlash'){const n=flashState.list.length||1;flashState.idx=(flashState.idx+(name==='nextFlash'?1:-1)+n)%n;flashState.flip=false;render()}
+ else if(name==='knownFlash'){const subset=T.filter(t=>flashState.filter==='all'||byId[t[2]]?.unit===flashState.filter),t=subset[flashState.list[flashState.idx]];if(t){if(saved.known.includes(t[0]))saved.known=saved.known.filter(x=>x!==t[0]);else saved.known.push(t[0]);persist();render()}}
+ else if(name==='shuffleFlash'){flashState.list=shuffled(flashState.list);flashState.idx=0;flashState.flip=false;render();toast('Đã trộn thứ tự thẻ')}
+ else if(name==='newQuiz'){newQuiz(quizState?.filter||'all');render()}
+ else if(name==='nextQuiz'){quizState.idx++;render();window.scrollTo({top:0,behavior:'smooth'})}
+ else if(name==='openToc'){openSidebar()}
+ else if(name==='exportNotes'){download('Nalanda_TamLoaiHoc_StudyBackup.json',JSON.stringify({type:'Nalanda_TLH_HandbookBackup',version:1,exportedAt:new Date().toISOString(),saved},null,2),'application/json;charset=utf-8');toast('Đã xuất file sao lưu')}
+ else if(name==='importNotes'){get('#importFile').click()}
+ else if(name==='resetProgress'){if(confirm('Đặt lại toàn bộ tiến độ, ghi chú và flashcards trên thiết bị? Hành động này không thể hoàn tác nếu chị chưa xuất sao lưu.')){saved={done:[],notes:{},known:[],theme:saved.theme};persist();render();toast('Đã đặt lại dữ liệu')}}
+}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-lesson],[data-go],[data-unit],[data-toggle],[data-complete],[data-action],[data-answer],[data-unit-filter]');if(!el)return;const ds=el.dataset;
+ if(ds.lesson){setRoute('lesson',ds.lesson)}
+ else if(ds.unit){filterUnit='all';setRoute('unit',ds.unit)}
+ else if(ds.go){setRoute(ds.go)}
+ else if(ds.toggle){const id=ds.toggle;openUnits.has(id)?openUnits.delete(id):openUnits.add(id);renderNav()}
+ else if(ds.complete){const id=ds.complete;saved.done.includes(id)?saved.done=saved.done.filter(x=>x!==id):saved.done.push(id);persist();render();toast(saved.done.includes(id)?'Đã đánh dấu hoàn thành':'Đã bỏ dấu hoàn thành')}
+ else if(ds.action){action(ds.action)}
+ else if(ds.answer!==undefined){const idx=Number(ds.answer);if(quizState.answers[quizState.idx]!==undefined)return;quizState.answers[quizState.idx]=idx;if(quizState.qs[quizState.idx].opts[idx].correct)quizState.score++;render()}
+ else if(ds.unitFilter){filterUnit=ds.unitFilter;render()}
+});
+document.addEventListener('keydown',e=>{const n=e.target.closest?.('.orbit-node');if(n&&(e.key==='Enter'||e.key===' ')){e.preventDefault();setRoute('lesson',n.dataset.lesson)}});
+get('#globalSearch').addEventListener('input',e=>{searchTerm=e.target.value;route={view:'search',id:''};history.replaceState(null,'','#search');render()});
+function paintTheme(){document.documentElement.dataset.theme=saved.theme||'light';get('#themeBtn').innerHTML=ic(saved.theme==='dark'?'sun':'moon');document.querySelector('meta[name=theme-color]').content=saved.theme==='dark'?'#121b1d':'#f7f8f3'}
+get('#themeBtn').addEventListener('click',()=>{saved.theme=saved.theme==='dark'?'light':'dark';paintTheme();persist()});
+get('#printBtn').addEventListener('click',()=>window.print());
+function openSidebar(){get('#sidebar').classList.add('open');get('#mobileOverlay').classList.add('open')}
+function closeSidebar(){get('#sidebar').classList.remove('open');get('#mobileOverlay').classList.remove('open')}
+get('#menuBtn').addEventListener('click',openSidebar);
+get('#closeBtn').addEventListener('click',closeSidebar);
+get('#mobileOverlay').addEventListener('click',closeSidebar);
+get('#importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const b=JSON.parse(await f.text());if(b.type!=='Nalanda_TLH_HandbookBackup'||!b.saved)throw Error('invalid');if(!confirm('Nhập dữ liệu từ bản sao lưu sẽ thay thế ghi chú và tiến độ hiện tại. Tiếp tục?'))return;saved={...saved,...b.saved};persist();paintTheme();render();toast('Đã nhập thành công')}catch(err){toast('File JSON không phải bản sao lưu hợp lệ')}e.target.value=''});
+document.addEventListener('keydown',e=>{const t=e.target?.tagName?.toLowerCase(),typing=['input','textarea','select'].includes(t);if(e.key==='Escape'){closeSidebar();if(!typing)get('#globalSearch')?.blur()}if(e.key==='/'&&!typing){e.preventDefault();get('#globalSearch').focus()}if(!typing&&route.view==='flash'){if(e.key==='ArrowRight')action('nextFlash');else if(e.key==='ArrowLeft')action('prevFlash')}});
+window.addEventListener('hashchange',syncHash);
+get('#brandMark').innerHTML=lotus;get('#menuBtn').innerHTML=ic('menu');get('#closeBtn').innerHTML=ic('x');get('#printBtn').innerHTML=ic('print');get('#searchIco').innerHTML=ic('search');
+paintTheme();syncHash();
+})();
+</script>
+</body>
+</html>
